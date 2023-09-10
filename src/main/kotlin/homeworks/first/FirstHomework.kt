@@ -56,7 +56,7 @@ class FirstHomework(
     }
 
     companion object {
-        val methodsNames = listOf("Bisection", "Newton", "Modified Newton", "Secant")
+        val methodsNames = listOf("Bisection", "Newton", "Modified_Newton", "Secant")
         val defaultData = HomeworkData({ x ->
             1.2 * x.pow(4) + 2 * x.pow(3) - 13 * x.pow(2) - 14.2 * x - 24.1
             },

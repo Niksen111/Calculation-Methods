@@ -33,7 +33,7 @@ class NewtonMethod : Method {
             getMethodName(),
             currentSolution,
             0.0,
-            func(currentSolution),
+            abs(func(currentSolution)),
             counter
         )
     }
