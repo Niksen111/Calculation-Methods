@@ -40,5 +40,5 @@ class ModifiedNewtonMethod : Method {
         )
     }
 
-    override fun getMethodName() = "Modified Newton"
+    override fun getMethodName() = "Modified_Newton"
 }
