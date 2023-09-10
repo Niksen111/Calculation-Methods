@@ -18,7 +18,7 @@ class NewtonMethod : Method {
         var counter = 0
         var previousSolution: Double = sequence.left + rand.nextDouble() * (sequence.right - sequence.left)
         while (secondDerivative(previousSolution) * func(previousSolution) <= 0) previousSolution =
-            sequence.left + rand.nextFloat() * (sequence.right - sequence.left)
+            sequence.left + rand.nextDouble() * (sequence.right - sequence.left)
 
         var currentSolution: Double =
             previousSolution - func(previousSolution) / firstDerivative(previousSolution)

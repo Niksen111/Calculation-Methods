@@ -16,17 +16,18 @@ class SecantMethod : Method {
     ): SolutionInfo {
         val rand = Random(System.currentTimeMillis())
 
-        var previousSolution: Double = sequence.left + rand.nextFloat() * (sequence.right - sequence.left)
+        var previousSolution: Double = sequence.left + rand.nextDouble() * (sequence.right - sequence.left)
         while (secondDerivative(previousSolution) * func(previousSolution) <= 0) previousSolution =
-            sequence.left + rand.nextFloat() * (sequence.right - sequence.left)
+            sequence.left + rand.nextDouble() * (sequence.right - sequence.left)
 
-        var currentSolution: Double = sequence.left + rand.nextFloat() * (sequence.right - sequence.left)
+        var currentSolution: Double = sequence.left + rand.nextDouble() * (sequence.right - sequence.left)
 
         var nextSolution: Double =
             currentSolution - func(currentSolution) / (func(currentSolution) - func(
                 previousSolution
             )) * (currentSolution - previousSolution)
         var counter = 0
+
         while (abs(currentSolution - previousSolution) >= epsilon) {
             previousSolution = currentSolution
             currentSolution = nextSolution
