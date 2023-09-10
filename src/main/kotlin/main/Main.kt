@@ -1,9 +1,8 @@
 package main
 
-import homeworks.first.FirstHomework
-import homeworks.first.utils.vo.Seq
-import kotlin.math.pow
+import homeworks.first.ConsoleInterface
 
 fun main(args: Array<String>) {
-    val firstHomework = FirstHomework()
+    val consoleInterface = ConsoleInterface()
+    consoleInterface.interactWithUser()
 }
