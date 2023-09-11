@@ -18,8 +18,9 @@ class ModifiedNewtonMethod : Method {
         var counter = 0
 
         var previousSolution: Double = sequence.left + rand.nextDouble() * (sequence.right - sequence.left)
-        while (secondDerivative(previousSolution) * func(previousSolution) <= 0) previousSolution =
-            sequence.left + rand.nextDouble() * (sequence.right - sequence.left)
+        while (secondDerivative(previousSolution) * func(previousSolution) <= 0) {
+            previousSolution = sequence.left + rand.nextDouble() * (sequence.right - sequence.left)
+        }
 
         val constDerivative: Double = firstDerivative(previousSolution)
 

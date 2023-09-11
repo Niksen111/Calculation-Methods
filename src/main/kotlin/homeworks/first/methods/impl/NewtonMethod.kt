@@ -17,11 +17,11 @@ class NewtonMethod : Method {
         val rand = Random(System.currentTimeMillis())
         var counter = 0
         var previousSolution: Double = sequence.left + rand.nextDouble() * (sequence.right - sequence.left)
-        while (secondDerivative(previousSolution) * func(previousSolution) <= 0) previousSolution =
-            sequence.left + rand.nextDouble() * (sequence.right - sequence.left)
+        while (secondDerivative(previousSolution) * func(previousSolution) <= 0) {
+            previousSolution = sequence.left + rand.nextDouble() * (sequence.right - sequence.left)
+        }
 
-        var currentSolution: Double =
-            previousSolution - func(previousSolution) / firstDerivative(previousSolution)
+        var currentSolution: Double = previousSolution - func(previousSolution) / firstDerivative(previousSolution)
 
         while (abs(currentSolution - previousSolution) >= epsilon) {
             previousSolution = currentSolution
