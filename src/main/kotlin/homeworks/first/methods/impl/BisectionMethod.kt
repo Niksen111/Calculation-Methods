@@ -13,6 +13,15 @@ class BisectionMethod : Method {
         firstDerivative: (Double) -> Double,
         secondDerivative: (Double) -> Double
     ): SolutionInfo {
+        if (func(sequence.left) == 0.0) {
+            return SolutionInfo(
+                getMethodName(),
+                sequence.left,
+                0.0,
+                abs(func(sequence.left)),
+                0
+            )
+        }
 
         var counter = 0
         var currSeq = sequence

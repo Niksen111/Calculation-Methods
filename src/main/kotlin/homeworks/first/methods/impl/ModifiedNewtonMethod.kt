@@ -14,6 +14,16 @@ class ModifiedNewtonMethod : Method {
         firstDerivative: (Double) -> Double,
         secondDerivative: (Double) -> Double
     ): SolutionInfo {
+        if (func(sequence.left) == 0.0) {
+            return SolutionInfo(
+                getMethodName(),
+                sequence.left,
+                0.0,
+                abs(func(sequence.left)),
+                0
+            )
+        }
+
         val rand = Random(System.currentTimeMillis())
         var counter = 0
 

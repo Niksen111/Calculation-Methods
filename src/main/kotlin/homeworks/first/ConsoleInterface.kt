@@ -39,7 +39,7 @@ class ConsoleInterface {
             return
         }
 
-
+        this.number = number
     }
 
     private fun printCommandList() {
@@ -160,15 +160,14 @@ class ConsoleInterface {
                     }
 
                     try {
-                        methodsNames.forEach { methodName ->
-                            val sequences = homework.separateSolutions(number)
-                            println("### Method: $methodName")
-                            println("Sequences number: ${sequences.size}")
-                            sequences.forEach {
-                                println(it)
-                            }
+                        val sequences = homework.separateSolutions(number)
+                        println("Sequences number: ${sequences.size}")
+                        println()
+                        sequences.forEach {
+                            println(it)
                             println()
-                            sequences.forEach {
+                            methodsNames.forEach { methodName ->
+                                println("### Method: $methodName")
                                 val solutionInfo = homework.findSolutionByMethod(methodName, it)
                                 processor.processInfo(solutionInfo)
                             }

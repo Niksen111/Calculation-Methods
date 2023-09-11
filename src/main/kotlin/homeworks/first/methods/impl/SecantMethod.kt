@@ -14,6 +14,16 @@ class SecantMethod : Method {
         firstDerivative: (Double) -> Double,
         secondDerivative: (Double) -> Double
     ): SolutionInfo {
+        if (func(sequence.left) == 0.0) {
+            return SolutionInfo(
+                getMethodName(),
+                sequence.left,
+                0.0,
+                abs(func(sequence.left)),
+                0
+                )
+        }
+
         val rand = Random(System.currentTimeMillis())
 
         var previousSolution: Double = sequence.left + rand.nextDouble() * (sequence.right - sequence.left)
@@ -21,7 +31,11 @@ class SecantMethod : Method {
             previousSolution = sequence.left + rand.nextDouble() * (sequence.right - sequence.left)
         }
 
-        var currentSolution: Double = sequence.left + rand.nextDouble() * (sequence.right - sequence.left)
+        val currSol: Double = if
+            (func(previousSolution) * func(sequence.left) >= 0) sequence.right
+            else sequence.left
+        var currentSolution: Double = previousSolution
+        previousSolution = currSol
 
         var nextSolution: Double =
             currentSolution - func(currentSolution) / (func(currentSolution) - func(
