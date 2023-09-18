@@ -24,18 +24,9 @@ class SecantMethod : Method {
                 )
         }
 
-        val rand = Random(System.currentTimeMillis())
+        var previousSolution: Double = sequence.left
 
-        var previousSolution: Double = sequence.left + rand.nextDouble() * (sequence.right - sequence.left)
-        while (secondDerivative(previousSolution) * func(previousSolution) <= 0) {
-            previousSolution = sequence.left + rand.nextDouble() * (sequence.right - sequence.left)
-        }
-
-        val currSol: Double = if
-            (func(previousSolution) * func(sequence.left) >= 0) sequence.right
-            else sequence.left
-        var currentSolution: Double = previousSolution
-        previousSolution = currSol
+        var currentSolution: Double = sequence.right
 
         var nextSolution: Double =
             currentSolution - func(currentSolution) / (func(currentSolution) - func(
