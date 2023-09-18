@@ -2,6 +2,7 @@ package homeworks.first
 
 import homeworks.first.utils.vo.Seq
 import homeworks.first.utils.SolutionInfoProcessor
+import homeworks.first.FirstHomework.Companion.defaultData
 
 /**
  * @author nksenchik
@@ -9,7 +10,15 @@ import homeworks.first.utils.SolutionInfoProcessor
  */
 class ConsoleInterface {
     private var seq = Seq(-5.0, 5.0)
-    private var number = 100000
+    private var number = 1000
+    private var epsilon = 1.0E-6
+    private var homework = FirstHomework(
+        func = defaultData.func,
+        seq = seq,
+        epsilon = epsilon,
+        firstDerivative = defaultData.firstDerivative,
+        secondDerivative = defaultData.secondDerivative
+    )
 
     private fun printTaskInfo() {
         println("Task №1 NUMERICAL METHODS FOR SOLVING NONLINEAR EQUATIONS")
@@ -17,7 +26,18 @@ class ConsoleInterface {
         println("1.2 * x^4 + 2 * x^3 - 13 * x^2 - 14.2 * x - 24.1")
         println("On the segment: [${seq.left};${seq.right}]")
         println("Number of sub-segments to split: $number")
+        println("Epsilon: $epsilon")
         println()
+    }
+
+    private fun setFirstHomework() {
+        this.homework = FirstHomework(
+            func = defaultData.func,
+            seq = seq,
+            epsilon = epsilon,
+            firstDerivative = defaultData.firstDerivative,
+            secondDerivative = defaultData.secondDerivative
+        )
     }
 
     private fun setSeq(left: Double, right: Double) {
@@ -28,7 +48,8 @@ class ConsoleInterface {
             return
         }
 
-        seq = Seq(left, right)
+        this.seq = Seq(left, right)
+        setFirstHomework()
     }
 
     private fun setSubsequenceNumber(number: Int) {
@@ -42,12 +63,26 @@ class ConsoleInterface {
         this.number = number
     }
 
+
+    private fun setEpsilon(eps: Double) {
+        if (eps <= 0.0) {
+            println("[ERROR]: Failed to set up epsilon")
+            println("[ERROR]: Epsilon must be more then 0")
+            println()
+            return
+        }
+
+        this.epsilon = eps
+        setFirstHomework()
+    }
+
     private fun printCommandList() {
         println("Commands list:")
         println("help                                  -print command list")
         println("quit                                  -quit the app")
         println("setSeq <left bound> <right bound>     -set up the sequence")
-        println("setNum <number>                -set up subsequences number")
+        println("setNum <number>                       -set up subsequences number")
+        println("setEps <epsilon>                      -set up epsilon")
         println("solve <method name>                   -find solution by the method")
         println("solveAll                              -find solution by all the methods")
         println("Methods names:")
@@ -64,7 +99,6 @@ class ConsoleInterface {
     }
 
     fun interactWithUser() {
-        val homework = FirstHomework()
         val processor = SolutionInfoProcessor()
 
         printTaskInfo()
@@ -130,6 +164,22 @@ class ConsoleInterface {
                     }
 
                     setSubsequenceNumber(number)
+                }
+                "setEps" -> {
+                    if (separatedCommand.size != 2) {
+                        printErr()
+                        continue
+                    }
+
+                    val eps: Double
+                    try {
+                        eps = separatedCommand[1].toDouble()
+                    } catch (e: Exception) {
+                        printErr()
+                        continue
+                    }
+
+                    setEpsilon(eps)
                 }
                 "solve" -> {
                     if (separatedCommand.size != 2 || separatedCommand[1] !in methodsNames) {
