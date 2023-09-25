@@ -1,4 +1,4 @@
-package homeworks.first.utils.vo
+package homeworks.utils.vo
 
 data class Seq(
     val left: Double,

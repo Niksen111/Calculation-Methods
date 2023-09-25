@@ -1,9 +1,8 @@
 package homeworks.first.methods.impl
 
 import homeworks.first.methods.Method
-import homeworks.first.utils.vo.Seq
+import homeworks.utils.vo.Seq
 import homeworks.first.utils.vo.SolutionInfo
-import java.util.*
 import kotlin.math.abs
 
 class SecantMethod : Method {

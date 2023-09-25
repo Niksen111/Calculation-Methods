@@ -1,7 +1,7 @@
 package homeworks.first.methods
 
 import homeworks.first.FirstHomework
-import homeworks.first.utils.vo.Seq
+import homeworks.utils.vo.Seq
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import kotlin.math.pow

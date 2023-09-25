@@ -1,12 +1,12 @@
 package main
 
-import homeworks.Ui
 import homeworks.UiManager
 
 private val uiManager = UiManager()
 
 private val taskMap = mapOf(
-   "1" to "UiH1"
+   "1" to "UiH1",
+   "2" to "UiH2"
 )
 
 private fun printInfo() {

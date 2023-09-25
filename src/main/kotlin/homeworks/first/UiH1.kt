@@ -1,7 +1,7 @@
 package homeworks.first
 
 import homeworks.Ui
-import homeworks.first.utils.vo.Seq
+import homeworks.utils.vo.Seq
 import homeworks.first.utils.SolutionInfoProcessor
 import homeworks.first.FirstHomework.Companion.defaultData
 
@@ -20,6 +20,7 @@ class UiH1 : Ui {
         firstDerivative = defaultData.firstDerivative,
         secondDerivative = defaultData.secondDerivative
     )
+    private val processor = SolutionInfoProcessor()
 
     private fun printTaskInfo() {
         println("Task №1 NUMERICAL METHODS FOR SOLVING NONLINEAR EQUATIONS")
@@ -31,7 +32,7 @@ class UiH1 : Ui {
         println()
     }
 
-    private fun setFirstHomework() {
+    private fun setHomework() {
         this.homework = FirstHomework(
             func = defaultData.func,
             seq = seq,
@@ -50,7 +51,7 @@ class UiH1 : Ui {
         }
 
         this.seq = Seq(left, right)
-        setFirstHomework()
+        setHomework()
     }
 
     private fun setSubsequenceNumber(number: Int) {
@@ -74,7 +75,7 @@ class UiH1 : Ui {
         }
 
         this.epsilon = eps
-        setFirstHomework()
+        setHomework()
     }
 
     private fun printCommandList() {
@@ -100,117 +101,119 @@ class UiH1 : Ui {
     }
 
     override fun start() {
-        val processor = SolutionInfoProcessor()
-
         printTaskInfo()
         printCommandList()
 
         while (true) {
-            println("Enter a command:")
-            val command = readln()
-            val separatedCommand = command.split(" ")
+            try {
+                println("Enter a command:")
+                val input = readln().split(" ")
 
-            if (separatedCommand.isEmpty() || separatedCommand.size > 3) {
-                printErr()
-                continue
-            }
-
-            when (separatedCommand.first()) {
-                "help" -> {
-                    if (separatedCommand.size > 1) {
-                        printErr()
-                        continue
-                    }
-
-                    printCommandList()
+                if (input.isEmpty() || input.size > 3) {
+                    printErr()
+                    continue
                 }
-                "back" -> {
-                    if (separatedCommand.size > 1) {
-                        printErr()
-                        continue
-                    }
 
-                    break
-                }
-                "setSeq" -> {
-                    if (separatedCommand.size != 3) {
-                        printErr()
-                        continue
-                    }
-
-                    val left: Double
-                    val right: Double
-                    try {
-                        left = separatedCommand[1].toDouble()
-                        right = separatedCommand[2].toDouble()
-                    } catch (e: Exception) {
-                        printErr()
-                        continue
-                    }
-
-                    setSeq(left, right)
-                }
-                "setNum" -> {
-                    if (separatedCommand.size != 2) {
-                        printErr()
-                        continue
-                    }
-
-                    val number: Int
-                    try {
-                        number = separatedCommand[1].toInt()
-                    } catch (e: Exception) {
-                        printErr()
-                        continue
-                    }
-
-                    setSubsequenceNumber(number)
-                }
-                "setEps" -> {
-                    if (separatedCommand.size != 2) {
-                        printErr()
-                        continue
-                    }
-
-                    val eps: Double
-                    try {
-                        eps = separatedCommand[1].toDouble()
-                    } catch (e: Exception) {
-                        printErr()
-                        continue
-                    }
-
-                    setEpsilon(eps)
-                }
-                "solve" -> {
-                    if (separatedCommand.size != 2 || separatedCommand[1] !in methodsNames) {
-                        printErr()
-                        continue
-                    }
-
-                    try {
-                        val sequences = homework.separateSolutions(number)
-                        println("Method: ${separatedCommand[1]}")
-                        println("Sequences number: ${sequences.size}")
-                        sequences.forEach {
-                            println(it)
+                when (input.first()) {
+                    "help" -> {
+                        if (input.size > 1) {
+                            printErr()
+                            continue
                         }
-                        println()
-                        sequences.forEach {
-                            val solutionInfo = homework.findSolutionByMethod(separatedCommand[1], it)
-                            processor.processInfo(solutionInfo)
-                        }
-                    } catch (e: Exception) {
-                        e.printStackTrace()
-                    }
-                }
-                "solveAll" -> {
-                    if (separatedCommand.size > 1) {
-                        printErr()
-                        continue
+
+                        printCommandList()
                     }
 
-                    try {
+                    "back" -> {
+                        if (input.size > 1) {
+                            printErr()
+                            continue
+                        }
+
+                        break
+                    }
+
+                    "setSeq" -> {
+                        if (input.size != 3) {
+                            printErr()
+                            continue
+                        }
+
+                        val left: Double
+                        val right: Double
+                        try {
+                            left = input[1].toDouble()
+                            right = input[2].toDouble()
+                        } catch (e: Exception) {
+                            printErr()
+                            continue
+                        }
+
+                        setSeq(left, right)
+                    }
+
+                    "setNum" -> {
+                        if (input.size != 2) {
+                            printErr()
+                            continue
+                        }
+
+                        val number: Int
+                        try {
+                            number = input[1].toInt()
+                        } catch (e: Exception) {
+                            printErr()
+                            continue
+                        }
+
+                        setSubsequenceNumber(number)
+                    }
+
+                    "setEps" -> {
+                        if (input.size != 2) {
+                            printErr()
+                            continue
+                        }
+
+                        val eps: Double
+                        try {
+                            eps = input[1].toDouble()
+                        } catch (e: Exception) {
+                            printErr()
+                            continue
+                        }
+
+                        setEpsilon(eps)
+                    }
+
+                    "solve" -> {
+                        if (input.size != 2 || input[1] !in methodsNames) {
+                            printErr()
+                            continue
+                        }
+
+                        try {
+                            val sequences = homework.separateSolutions(number)
+                            println("Method: ${input[1]}")
+                            println("Sequences number: ${sequences.size}")
+                            sequences.forEach {
+                                println(it)
+                            }
+                            println()
+                            sequences.forEach {
+                                val solutionInfo = homework.findSolutionByMethod(input[1], it)
+                                processor.processInfo(solutionInfo)
+                            }
+                        } catch (e: Exception) {
+                            e.printStackTrace()
+                        }
+                    }
+
+                    "solveAll" -> {
+                        if (input.size > 1) {
+                            printErr()
+                            continue
+                        }
                         val sequences = homework.separateSolutions(number)
                         println("Sequences number: ${sequences.size}")
                         println()
@@ -223,13 +226,13 @@ class UiH1 : Ui {
                                 processor.processInfo(solutionInfo)
                             }
                         }
-                    } catch (e: Exception) {
-                        e.printStackTrace()
+                    }
+                    else -> {
+                        printErr()
                     }
                 }
-                else -> {
-                    printErr()
-                }
+            } catch (e: Exception) {
+                e.printStackTrace()
             }
         }
     }

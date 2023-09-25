@@ -2,7 +2,7 @@ package homeworks.first
 
 import homeworks.first.methods.MethodsManager
 import homeworks.first.utils.vo.HomeworkData
-import homeworks.first.utils.vo.Seq
+import homeworks.utils.vo.Seq
 import homeworks.first.utils.vo.SolutionInfo
 import kotlin.math.pow
 

@@ -1,6 +1,6 @@
 package homeworks.first.methods
 
-import homeworks.first.utils.vo.Seq
+import homeworks.utils.vo.Seq
 import homeworks.first.utils.vo.SolutionInfo
 
 interface Method {
