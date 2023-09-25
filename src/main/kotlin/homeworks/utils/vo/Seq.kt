@@ -4,5 +4,9 @@ data class Seq(
     val left: Double,
     val right: Double
 ) {
+    init {
+        require(right >= left)
+    }
+
     fun size() = right - left
 }
