@@ -1,5 +1,6 @@
 package homeworks.first
 
+import homeworks.Ui
 import homeworks.first.utils.vo.Seq
 import homeworks.first.utils.SolutionInfoProcessor
 import homeworks.first.FirstHomework.Companion.defaultData
@@ -8,7 +9,7 @@ import homeworks.first.FirstHomework.Companion.defaultData
  * @author nksenchik
  * @since 1.0.0
  */
-class ConsoleInterface {
+class UiH1 : Ui {
     private var seq = Seq(-5.0, 5.0)
     private var number = 1000
     private var epsilon = 1.0E-6
@@ -79,7 +80,7 @@ class ConsoleInterface {
     private fun printCommandList() {
         println("Commands list:")
         println("help                                  -print command list")
-        println("quit                                  -quit the app")
+        println("back                                  -quit the current task")
         println("setSeq <left bound> <right bound>     -set up the sequence")
         println("setNum <number>                       -set up subsequences number")
         println("setEps <epsilon>                      -set up epsilon")
@@ -98,7 +99,7 @@ class ConsoleInterface {
         println()
     }
 
-    fun interactWithUser() {
+    override fun start() {
         val processor = SolutionInfoProcessor()
 
         printTaskInfo()
@@ -123,7 +124,7 @@ class ConsoleInterface {
 
                     printCommandList()
                 }
-                "quit" -> {
+                "back" -> {
                     if (separatedCommand.size > 1) {
                         printErr()
                         continue
