@@ -1,4 +1,4 @@
-package homeworks
+package homeworks.utils.ui
 
 interface Ui {
     fun start()

@@ -1,6 +1,6 @@
 package homeworks.first
 
-import homeworks.Ui
+import homeworks.utils.ui.Ui
 import homeworks.utils.vo.Seq
 import homeworks.first.utils.SolutionInfoProcessor
 import homeworks.first.FirstHomework.Companion.defaultData

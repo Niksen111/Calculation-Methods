@@ -1,6 +1,6 @@
 package main
 
-import homeworks.UiManager
+import homeworks.utils.ui.UiManager
 
 private val uiManager = UiManager()
 

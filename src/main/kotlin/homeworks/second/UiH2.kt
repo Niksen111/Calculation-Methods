@@ -1,6 +1,6 @@
 package homeworks.second
 
-import homeworks.Ui
+import homeworks.utils.ui.Ui
 import homeworks.utils.vo.Seq
 
 class UiH2 : Ui {
