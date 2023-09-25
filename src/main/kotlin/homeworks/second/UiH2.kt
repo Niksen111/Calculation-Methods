@@ -2,16 +2,12 @@ package homeworks.second
 
 import homeworks.Ui
 import homeworks.utils.vo.Seq
-import kotlin.math.cos
 
 class UiH2 : Ui {
     private var valuesNumber = 10
     private var seq = Seq(0.0, 1.0)
     private var x = 0.5
     private var degree = 2
-    private var function = { x: Double ->
-        cos(x) + 2 * x
-    }
     private var homework: SecondHomework = SecondHomework()
 
     private fun setHomework() {
@@ -27,6 +23,7 @@ class UiH2 : Ui {
         }
 
         this.degree = deg
+        setHomework()
     }
 
     private fun setSeq(left: Double, right: Double) {
@@ -43,6 +40,7 @@ class UiH2 : Ui {
 
     private fun printTaskInfo() {
         println("Task №2 ALGEBRAIC INTERPOLATION PROBLEM")
+        println("Option 10")
         println("Function to be used:")
         println("cos(x) + 2 * x")
         println("On the segment: [${seq.left}; ${seq.right}]")
