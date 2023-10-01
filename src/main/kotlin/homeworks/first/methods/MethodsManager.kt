@@ -17,7 +17,7 @@ class MethodsManager {
         methods.associateBy { it.getMethodName() }
     }
 
-    fun getMethod(txnTypeCode: String): Method {
-        return methodsByMethodName.getValue(txnTypeCode)
+    fun getMethod(name: String): Method {
+        return methodsByMethodName.getValue(name)
     }
 }

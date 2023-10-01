@@ -7,7 +7,7 @@ class Polynomial(
     private val older: Double
 
     init {
-        require(coefficients.isNotEmpty()) { "Polynomial does not exist" }
+        require(coefficients.isNotEmpty()) { "Coefficients must not be empty" }
         this.coefficients = coefficients.copyOfRange(0, getExp(coefficients))
         size = coefficients.size
         older = coefficients.last()
