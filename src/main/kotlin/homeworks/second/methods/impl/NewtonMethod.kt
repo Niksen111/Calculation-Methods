@@ -22,6 +22,7 @@ class NewtonMethod : InterpolationMethod {
             val result = mutableListOf(Polynomial(doubleArrayOf(calcDividedDifference(entry.key))))
 
             var found = false
+            // Take elements until it.key
             val tablePart = table.filter {
                 val wasFound = found;
                 if (it.key == entry.key) found = true;
@@ -54,6 +55,8 @@ class NewtonMethod : InterpolationMethod {
     private fun calcDividedDifference(x: Double): Double {
         var result = 0.0
         var found = false
+
+        // Take elements until x
         val tablePart = table.filter {
             val wasFound = found;
             if (it.key == x) found = true;
