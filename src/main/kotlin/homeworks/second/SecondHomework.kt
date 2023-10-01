@@ -10,6 +10,11 @@ class SecondHomework(
     val valuesNumber: Int = SecondHomework.valuesNumber,
     val degree: Int = SecondHomework.degree
 ) {
+    init {
+        require(degree >= valuesNumber) { "Values number should not be more then degree" }
+        require(valuesNumber > 0) { "Values number must be more then 0" }
+    }
+
     val table: Map<Double, Double> = setTable()
 
     private fun setTable(): HashMap<Double, Double> {
@@ -23,14 +28,16 @@ class SecondHomework(
         return initTable
     }
 
-
+    fun printTable() {
+        table.map { println(it) }
+    }
 
     companion object {
         val function = { x: Double ->
             cos(x) + 2 * x
         }
-        val seq = Seq( -5.0, 5.0 )
-        const val valuesNumber = 10
-        const val degree = 10
+        val seq = Seq( 0.5, 1.8 )
+        const val valuesNumber = 7
+        const val degree = 14
     }
 }

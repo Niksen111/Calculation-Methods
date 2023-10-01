@@ -6,7 +6,6 @@ import homeworks.utils.vo.Seq
 class UiH2 : Ui {
     private var valuesNumber = 10
     private var seq = Seq(0.0, 1.0)
-    private var x = 0.5
     private var degree = 2
     private var homework: SecondHomework = SecondHomework()
 
@@ -66,7 +65,6 @@ class UiH2 : Ui {
     override fun start() {
         printTaskInfo()
         printCommandList()
-
         while (true) {
             try {
                 println("Enter a command:")
