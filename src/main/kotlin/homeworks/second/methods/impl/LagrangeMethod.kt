@@ -2,9 +2,10 @@ package homeworks.second.methods.impl
 
 import homeworks.second.methods.InterpolationMethod
 import homeworks.utils.Polynomial
+import java.util.SortedMap
 
 class LagrangeMethod : InterpolationMethod {
-    override var table: Map<Double, Double> = mapOf()
+    override var table: SortedMap<Double, Double> = sortedMapOf()
         private set
 
     override var degree: Int = 0
@@ -12,7 +13,7 @@ class LagrangeMethod : InterpolationMethod {
 
     private var polynomial: Polynomial = Polynomial(doubleArrayOf(0.0))
 
-    override fun setUp(table: Map<Double, Double>, degree: Int) {
+    override fun setUp(table: SortedMap<Double, Double>, degree: Int) {
         this.table = table
         this.degree = degree
         this.polynomial = createPolynomial()

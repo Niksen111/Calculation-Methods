@@ -136,10 +136,8 @@ class UiH2 : Ui {
 
                         val point = input[1].toDouble()
 
-                        SecondHomework.methodsNames.map {
-                            val result = homework.evaluateByMethod(it, point)
-                            println(result)
-                        }
+                        val kek = homework.evaluateByMethod("Newton", point)
+                        println(kek)
                     }
                     else -> {
                         printErr()

@@ -2,9 +2,10 @@ package homeworks.second.methods.impl
 
 import homeworks.second.methods.InterpolationMethod
 import homeworks.utils.Polynomial
+import java.util.SortedMap
 
 class NewtonMethod : InterpolationMethod {
-    override var table: Map<Double, Double> = mapOf()
+    override var table: SortedMap<Double, Double> = sortedMapOf()
         private set
 
     override var degree: Int = 0
@@ -12,13 +13,15 @@ class NewtonMethod : InterpolationMethod {
 
     private var polyElements: MutableList<List<Polynomial>> = mutableListOf()
 
-    override fun setUp(table: Map<Double, Double>, degree: Int) {
+    override fun setUp(table: SortedMap<Double, Double>, degree: Int) {
         this.table = table
         this.degree = degree
         createPolynomial()
     }
 
     private fun createPolynomial() {
+        polyElements.add(mutableListOf(Polynomial(doubleArrayOf(table[table.firstKey()]!!))))
+
         table.map { entry ->
             val result = mutableListOf(Polynomial(doubleArrayOf(calcDividedDifference(entry.key))))
 
