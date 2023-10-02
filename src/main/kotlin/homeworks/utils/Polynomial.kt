@@ -15,7 +15,7 @@ class Polynomial(
 
     private fun getExp(array: DoubleArray): Int {
         return array.foldIndexed(0) { index, acc, d ->
-            if (d != 0.0) acc else index
+            if (d != 0.0) index else acc
         }
     }
 
