@@ -2,6 +2,7 @@ package homeworks.second
 
 import homeworks.second.methods.InterpolationMethodsManager
 import homeworks.utils.vo.Seq
+import java.util.SortedMap
 import kotlin.math.cos
 
 class SecondHomework(
@@ -15,17 +16,18 @@ class SecondHomework(
         require(valuesNumber > 0) { "Values number must be more then 0" }
     }
 
-    val table: Map<Double, Double> = setTable()
+    val table: SortedMap<Double, Double> = setTable()
 
     val manager = InterpolationMethodsManager()
 
     fun evaluateByMethod(methodName: String, point: Double): Double {
         require(methodName in methodsNames) { "Method name must be in Methods list" }
         val method = manager.getMethod(methodName)
+        method.setUp(table, degree)
         return method.evaluate(point)
     }
 
-    private fun setTable(): HashMap<Double, Double> {
+    private fun setTable(): SortedMap<Double, Double> {
         val initTable = HashMap<Double, Double>()
         val step = seq.size() / valuesNumber
         for (i in 0..<valuesNumber) {
@@ -33,7 +35,7 @@ class SecondHomework(
             initTable[x] = function(x)
         }
 
-        return initTable
+        return initTable.toSortedMap()
     }
 
     fun printTable() {
