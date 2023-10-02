@@ -15,6 +15,7 @@ class NewtonMethod : InterpolationMethod {
     override fun setUp(table: Map<Double, Double>, degree: Int) {
         this.table = table
         this.degree = degree
+        createPolynomial()
     }
 
     private fun createPolynomial() {
@@ -100,6 +101,6 @@ class NewtonMethod : InterpolationMethod {
     }
 
     companion object {
-        const val methodName = "Lagrange"
+        const val methodName = "Newton"
     }
 }

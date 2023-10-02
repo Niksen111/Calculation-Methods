@@ -4,13 +4,18 @@ import homeworks.utils.ui.Ui
 import homeworks.utils.vo.Seq
 
 class UiH2 : Ui {
-    private var valuesNumber = 10
-    private var seq = Seq(0.0, 1.0)
-    private var degree = 2
+    private var valuesNumber = SecondHomework.valuesNumber
+    private var seq = SecondHomework.seq
+    private var degree = SecondHomework.degree
     private var homework: SecondHomework = SecondHomework()
 
     private fun setHomework() {
-        this.homework = SecondHomework()
+        this.homework = SecondHomework(
+            SecondHomework.function,
+            seq,
+            valuesNumber,
+            degree
+        )
     }
 
     private fun setDegree(deg: Int) {
@@ -54,6 +59,7 @@ class UiH2 : Ui {
         println("back                                  -quit the current task")
         println("setSeq <left bound> <right bound>     -set up the sequence")
         println("setDeg <degree>                       -set up the polynomial degree")
+        println("evalAll <point>                       -evaluate the value by all the methods at a given point")
         println()
     }
 
@@ -121,6 +127,19 @@ class UiH2 : Ui {
                         val deg = input[1].toInt()
 
                         setDegree(deg)
+                    }
+                    "evalAll" -> {
+                        if (input.size != 2) {
+                            printErr()
+                            continue
+                        }
+
+                        val point = input[1].toDouble()
+
+                        SecondHomework.methodsNames.map {
+                            val result = homework.evaluateByMethod(it, point)
+                            println(result)
+                        }
                     }
                     else -> {
                         printErr()

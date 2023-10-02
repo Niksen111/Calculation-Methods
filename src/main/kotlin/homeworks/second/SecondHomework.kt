@@ -1,7 +1,7 @@
 package homeworks.second
 
+import homeworks.second.methods.InterpolationMethodsManager
 import homeworks.utils.vo.Seq
-import java.util.HashMap
 import kotlin.math.cos
 
 class SecondHomework(
@@ -16,6 +16,14 @@ class SecondHomework(
     }
 
     val table: Map<Double, Double> = setTable()
+
+    val manager = InterpolationMethodsManager()
+
+    fun evaluateByMethod(methodName: String, point: Double): Double {
+        require(methodName in methodsNames) { "Method name must be in Methods list" }
+        val method = manager.getMethod(methodName)
+        return method.evaluate(point)
+    }
 
     private fun setTable(): HashMap<Double, Double> {
         val initTable = HashMap<Double, Double>()
@@ -33,6 +41,7 @@ class SecondHomework(
     }
 
     companion object {
+        val methodsNames = listOf("Newton", "Lagrange")
         val function = { x: Double ->
             cos(x) + 2 * x
         }

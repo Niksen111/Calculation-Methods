@@ -8,7 +8,7 @@ class Polynomial(
 
     init {
         require(coefficients.isNotEmpty()) { "Coefficients must not be empty" }
-        this.coefficients = coefficients.copyOfRange(0, getExp(coefficients))
+        this.coefficients = coefficients.copyOfRange(0, getExp(coefficients) + 1)
         size = coefficients.size
         older = coefficients.last()
     }

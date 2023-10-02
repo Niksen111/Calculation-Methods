@@ -64,6 +64,6 @@ class LagrangeMethod : InterpolationMethod {
     override fun getMethodName() = methodName
 
     companion object {
-        const val methodName = "Newton"
+        const val methodName = "Lagrange"
     }
 }
