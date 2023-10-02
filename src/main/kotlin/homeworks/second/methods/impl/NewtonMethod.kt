@@ -28,9 +28,7 @@ class NewtonMethod : InterpolationMethod {
             var found = false
             // Take elements until it.key
             val tablePart = table.filter {
-                val wasFound = found;
-                if (it.key == entry.key) found = true;
-                !wasFound
+                it.key <= entry.key
             }
 
             tablePart.map {
@@ -62,9 +60,7 @@ class NewtonMethod : InterpolationMethod {
 
         // Take elements until x
         val tablePart = table.filter {
-            val wasFound = found;
-            if (it.key == x) found = true;
-            !wasFound
+            it.key <= x
         }
 
         tablePart.map { entry ->
