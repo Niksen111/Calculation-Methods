@@ -33,7 +33,7 @@ class LagrangeMethod : InterpolationMethod {
                 }
             }
 
-            lI *= Polynomial(doubleArrayOf(1 / divide))
+            lI *= Polynomial(doubleArrayOf(1.0 / divide))
             result += lI
         }
 
@@ -44,14 +44,14 @@ class LagrangeMethod : InterpolationMethod {
         var result = 0.0
 
         table.map { entry ->
-            var lI: Double = entry.value
-            val xI: Double = entry.key
+            var lI = entry.value
+            val xI = entry.key
             var divide = 1.0
             table.map {
                 if (xI != it.key) {
                     val xJ = it.key
-                    divide += xI - xJ
-                    lI *= point - xJ
+                    divide *= xI - xJ
+                    lI *= (point - xJ)
                 }
             }
 

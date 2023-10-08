@@ -138,6 +138,8 @@ class UiH2 : Ui {
 
                         val kek = homework.evaluateByMethod("Newton", point)
                         println(kek)
+                        val lol = homework.evaluateByMethod("Lagrange", point)
+                        println(lol)
                     }
                     else -> {
                         printErr()
