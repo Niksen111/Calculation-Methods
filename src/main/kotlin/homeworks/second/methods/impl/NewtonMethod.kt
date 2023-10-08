@@ -20,18 +20,12 @@ class NewtonMethod : InterpolationMethod {
     }
 
     private fun createPolynomial() {
-        polyElements.add(mutableListOf(Polynomial(doubleArrayOf(table[table.firstKey()]!!))))
-
         table.map { entry ->
             val result = mutableListOf(Polynomial(doubleArrayOf(calcDividedDifference(entry.key))))
 
-            var found = false
-            // Take elements until it.key
-            val tablePart = table.filter {
-                it.key <= entry.key
-            }
-
-            tablePart.map {
+            table.filter {
+                it.key < entry.key
+            }.map {
                 result.add(Polynomial(doubleArrayOf(-it.key, 1.0)))
             }
 
@@ -56,9 +50,7 @@ class NewtonMethod : InterpolationMethod {
 
     private fun calcDividedDifference(x: Double): Double {
         var result = 0.0
-        var found = false
 
-        // Take elements until x
         val tablePart = table.filter {
             it.key <= x
         }
@@ -69,9 +61,9 @@ class NewtonMethod : InterpolationMethod {
                 if (entry.key != it.key) {
                     product *= entry.key - it.key
                 }
-
-                result += entry.value / product
             }
+
+            result += entry.value / product
         }
 
         return result

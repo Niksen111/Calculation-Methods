@@ -107,7 +107,7 @@ class Polynomial(
         var str = ""
         for (i in coefficients.indices.reversed()) {
             if (coefficients[i] == 0.0) continue
-            val plus = if (coefficients[i] > 0 && str.isEmpty()) "+" else ""
+            val plus = if (coefficients[i] >= 0 && coefficients.size > 1) "+" else ""
             val degree = if (i > 0) "x^($i)" else ""
             str = str + plus + coefficients[i] + degree
         }
