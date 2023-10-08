@@ -16,10 +16,11 @@ class NewtonMethod : InterpolationMethod {
     override fun setUp(table: SortedMap<Double, Double>, degree: Int) {
         this.table = table
         this.degree = degree
-        createPolynomial()
+        this.polyElements = createPolynomial()
     }
 
-    private fun createPolynomial() {
+    private fun createPolynomial(): MutableList<List<Polynomial>> {
+        val elems: MutableList<List<Polynomial>> = mutableListOf()
         table.map { entry ->
             val result = mutableListOf(Polynomial(doubleArrayOf(calcDividedDifference(entry.key))))
 
@@ -29,8 +30,10 @@ class NewtonMethod : InterpolationMethod {
                 result.add(Polynomial(doubleArrayOf(-it.key, 1.0)))
             }
 
-            polyElements.add(result)
+            elems.add(result)
         }
+
+        return elems
     }
 
     override fun evaluate(point: Double): Double {
