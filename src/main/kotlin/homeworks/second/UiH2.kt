@@ -2,6 +2,7 @@ package homeworks.second
 
 import homeworks.utils.ui.Ui
 import homeworks.utils.vo.Seq
+import kotlin.math.abs
 
 class UiH2 : Ui {
     private var valuesNumber = SecondHomework.valuesNumber
@@ -136,10 +137,13 @@ class UiH2 : Ui {
 
                         val point = input[1].toDouble()
 
-                        val kek = homework.evaluateByMethod("Newton", point)
-                        println(kek)
-                        val lol = homework.evaluateByMethod("Lagrange", point)
-                        println(lol)
+                        SecondHomework.methodsNames.forEach {
+                            println("Method name: $it")
+                            val result = homework.evaluateByMethod(it, point)
+                            println("Result: $result")
+                            println("Error: ${abs(SecondHomework.function(point) - result)}")
+                            println()
+                        }
                     }
                     else -> {
                         printErr()
