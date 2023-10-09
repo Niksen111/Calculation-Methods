@@ -41,25 +41,7 @@ class LagrangeMethod : InterpolationMethod {
     }
 
     override fun evaluate(point: Double): Double {
-        var result = 0.0
-
-        table.map { entry ->
-            var lI = entry.value
-            val xI = entry.key
-            var divide = 1.0
-            table.map {
-                if (xI != it.key) {
-                    val xJ = it.key
-                    divide *= xI - xJ
-                    lI *= (point - xJ)
-                }
-            }
-
-            lI /= divide
-            result += lI
-        }
-
-        return result
+        return polynomial.evaluate(point)
     }
 
     override fun getMethodName() = methodName
