@@ -12,7 +12,7 @@ class SecondHomework(
     val degree: Int = SecondHomework.degree
 ) {
     init {
-        require(degree >= valuesNumber) { "Values number should not be more then degree" }
+        require(degree < valuesNumber) { "Values number should be more then degree" }
         require(valuesNumber > 0) { "Values number must be more then 0" }
     }
 
@@ -23,7 +23,8 @@ class SecondHomework(
     fun evaluateByMethod(methodName: String, point: Double): Double {
         require(methodName in methodsNames) { "Method name must be in Methods list" }
         val method = manager.getMethod(methodName)
-        method.setUp(table, degree)
+        var k = -1
+        method.setUp(table.filter { k++; k <= degree }.toSortedMap(), degree)
         return method.evaluate(point)
     }
 
@@ -48,7 +49,7 @@ class SecondHomework(
             cos(x) + 2 * x
         }
         val seq = Seq( 0.5, 1.8 )
-        const val valuesNumber = 7
-        const val degree = 14
+        const val valuesNumber = 14
+        const val degree = 7
     }
 }
