@@ -43,6 +43,18 @@ class UiH2 : Ui {
         setHomework()
     }
 
+    private fun setVN(vn: Int) {
+        if (vn > degree) {
+            println("[ERROR]: Failed to set up values number")
+            println("[ERROR]: Degree must be less then values number")
+            println()
+            return
+        }
+
+        this.valuesNumber = vn
+        setHomework()
+    }
+
     private fun printTaskInfo() {
         println("Task №2 ALGEBRAIC INTERPOLATION PROBLEM")
         println("Option 10")
@@ -58,8 +70,10 @@ class UiH2 : Ui {
         println("Commands list:")
         println("help                                  -print command list")
         println("back                                  -quit the current task")
+        println("printTable                            -print table")
         println("setSeq <left bound> <right bound>     -set up the sequence")
         println("setDeg <degree>                       -set up the polynomial degree")
+        println("setVN <values number>                 -set up the values number")
         println("evalAll <point>                       -evaluate the value by all the methods at a given point")
         println()
     }
@@ -128,6 +142,24 @@ class UiH2 : Ui {
                         val deg = input[1].toInt()
 
                         setDegree(deg)
+                    }
+                    "setVN" -> {
+                        if (input.size != 2) {
+                            printErr()
+                            continue
+                        }
+
+                        val vn = input[1].toInt()
+
+                        setVN(vn)
+                    }
+                    "printTable" -> {
+                        if (input.size != 1) {
+                            printErr()
+                            continue
+                        }
+
+                        homework.printTable()
                     }
                     "evalAll" -> {
                         if (input.size != 2) {
