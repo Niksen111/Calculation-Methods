@@ -10,7 +10,7 @@ import kotlin.math.pow
  * @author nksenchik
  * @since 1.0.0
  */
-class FirstHomework(
+class Homework1(
     val func: (Double) -> (Double),
     val seq: Seq,
     val epsilon: Double,

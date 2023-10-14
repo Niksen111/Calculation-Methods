@@ -6,11 +6,11 @@ import java.util.SortedMap
 import kotlin.math.abs
 import kotlin.math.cos
 
-class SecondHomework(
-    val function: (Double) -> Double = SecondHomework.function,
-    val seq: Seq = SecondHomework.seq,
-    val valuesNumber: Int = SecondHomework.valuesNumber,
-    val degree: Int = SecondHomework.degree
+class Homework2(
+    val function: (Double) -> Double = Homework2.function,
+    val seq: Seq = Homework2.seq,
+    val valuesNumber: Int = Homework2.valuesNumber,
+    val degree: Int = Homework2.degree
 ) {
     init {
         require(degree < valuesNumber) { "Values number should be more then degree" }

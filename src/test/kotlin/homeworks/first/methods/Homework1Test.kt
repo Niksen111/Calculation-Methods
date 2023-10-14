@@ -1,6 +1,6 @@
 package homeworks.first.methods
 
-import homeworks.first.FirstHomework
+import homeworks.first.Homework1
 import homeworks.utils.vo.Seq
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
@@ -12,7 +12,7 @@ import kotlin.math.roundToLong
  * @author nksenchik
  * @since 1.0.0
  */
-class FirstHomeworkTest {
+class Homework1Test {
     private fun roundToN(value: Double, n: Int): Double {
         val tenDegree = 10.0.pow(n.toDouble())
 
@@ -22,7 +22,7 @@ class FirstHomeworkTest {
     @Test
     internal fun `separateSolutions returns right seq list`() {
         // Objects
-        val homework = FirstHomework()
+        val homework = Homework1()
 
         val realSequences1 = listOf(Seq(-4.0, -3.0), Seq(3.0, 4.0))
         val realSequences2 = listOf(Seq(-4.0, -3.9), Seq(3.2, 3.3))

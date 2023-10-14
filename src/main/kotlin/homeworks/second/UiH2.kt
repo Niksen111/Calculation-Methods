@@ -5,14 +5,14 @@ import homeworks.utils.vo.Seq
 import kotlin.math.abs
 
 class UiH2 : Ui {
-    private var valuesNumber = SecondHomework.valuesNumber
-    private var seq = SecondHomework.seq
-    private var degree = SecondHomework.degree
-    private var homework: SecondHomework = SecondHomework()
+    private var valuesNumber = Homework2.valuesNumber
+    private var seq = Homework2.seq
+    private var degree = Homework2.degree
+    private var homework: Homework2 = Homework2()
 
     private fun setHomework() {
-        this.homework = SecondHomework(
-            SecondHomework.function,
+        this.homework = Homework2(
+            Homework2.function,
             seq,
             valuesNumber,
             degree
@@ -169,11 +169,11 @@ class UiH2 : Ui {
 
                         val point = input[1].toDouble()
 
-                        SecondHomework.methodsNames.forEach {
+                        Homework2.methodsNames.forEach {
                             println("Method name: $it")
                             val result = homework.evaluateByMethod(it, point)
                             println("Result: $result")
-                            println("Error: ${abs(SecondHomework.function(point) - result)}")
+                            println("Error: ${abs(Homework2.function(point) - result)}")
                             println()
                         }
                     }

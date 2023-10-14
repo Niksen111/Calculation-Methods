@@ -3,7 +3,7 @@ package homeworks.first
 import homeworks.utils.ui.Ui
 import homeworks.utils.vo.Seq
 import homeworks.first.utils.SolutionInfoProcessor
-import homeworks.first.FirstHomework.Companion.defaultData
+import homeworks.first.Homework1.Companion.defaultData
 
 /**
  * @author nksenchik
@@ -13,7 +13,7 @@ class UiH1 : Ui {
     private var seq = Seq(-5.0, 5.0)
     private var number = 1000
     private var epsilon = 1.0E-6
-    private var homework = FirstHomework(
+    private var homework = Homework1(
         func = defaultData.func,
         seq = seq,
         epsilon = epsilon,
@@ -33,7 +33,7 @@ class UiH1 : Ui {
     }
 
     private fun setHomework() {
-        this.homework = FirstHomework(
+        this.homework = Homework1(
             func = defaultData.func,
             seq = seq,
             epsilon = epsilon,

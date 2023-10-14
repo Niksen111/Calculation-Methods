@@ -1,7 +1,7 @@
 package homeworks.first.methods
 
-import homeworks.first.FirstHomework
-import homeworks.first.FirstHomework.Companion.defaultData
+import homeworks.first.Homework1
+import homeworks.first.Homework1.Companion.defaultData
 import org.junit.jupiter.api.Test
 import kotlin.math.pow
 import kotlin.math.roundToLong
@@ -22,7 +22,7 @@ class MethodsTest {
 
     fun checkOnTaskData(methodName: String) {
         // Objects
-        val homework = FirstHomework()
+        val homework = Homework1()
         val sequences = homework.separateSolutions(100000)
         val method = methodsManager.getMethod(methodName)
 

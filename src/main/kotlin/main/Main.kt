@@ -6,7 +6,9 @@ private val uiManager = UiManager()
 
 private val taskMap = mapOf(
    "1" to "UiH1",
-   "2" to "UiH2"
+   "2" to "UiH2",
+   "3.1" to "UiH3P1",
+   "3.2" to "UiH3P2"
 )
 
 private fun printInfo() {
@@ -17,7 +19,7 @@ private fun printInfo() {
 private fun printCommandList() {
    println("Commands list:")
    println("help                                  -print command list")
-   println("quit                                  -quit the app")
+   println("exit                                  -exit the app")
    println("taskList                              -print task list")
    println("task <number>                         -choose task")
    println()
@@ -52,7 +54,7 @@ private fun startUi() {
 
                printCommandList()
             }
-            "quit" -> {
+            "exit" -> {
                if (input.size != 1) {
                   printErr()
                   continue
