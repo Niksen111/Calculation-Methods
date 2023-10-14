@@ -44,7 +44,7 @@ class UiH2 : Ui {
     }
 
     private fun setVN(vn: Int) {
-        if (vn > degree) {
+        if (vn <= degree) {
             println("[ERROR]: Failed to set up values number")
             println("[ERROR]: Degree must be less then values number")
             println()

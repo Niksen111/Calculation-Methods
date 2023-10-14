@@ -11,37 +11,31 @@ class LagrangeMethod : InterpolationMethod {
     override var degree: Int = 0
         private set
 
-    private var polynomial: Polynomial = Polynomial(doubleArrayOf(0.0))
-
     override fun setUp(table: SortedMap<Double, Double>, degree: Int) {
         this.table = table
         this.degree = degree
-        this.polynomial = createPolynomial()
     }
 
-    private fun createPolynomial(): Polynomial {
-        var result = Polynomial(doubleArrayOf(0.0))
+    override fun evaluate(point: Double): Double {
+        var result = 0.0
+
         table.map { entry ->
-            var lI = Polynomial(doubleArrayOf(entry.value))
+            var lI = entry.value
             val xI = entry.key
             var divide = 1.0
             table.map {
-                if (it.key != xI) {
+                if (xI != it.key) {
                     val xJ = it.key
-                    divide *= (xI - xJ)
-                    lI *= Polynomial(doubleArrayOf(-xJ, 1.0))
+                    divide *= xI - xJ
+                    lI *= (point - xJ)
                 }
             }
 
-            lI *= Polynomial(doubleArrayOf(1.0 / divide))
+            lI /= divide
             result += lI
         }
 
         return result
-    }
-
-    override fun evaluate(point: Double): Double {
-        return polynomial.evaluate(point)
     }
 
     override fun getMethodName() = methodName

@@ -3,6 +3,7 @@ package homeworks.second
 import homeworks.second.methods.InterpolationMethodsManager
 import homeworks.utils.vo.Seq
 import java.util.SortedMap
+import kotlin.math.abs
 import kotlin.math.cos
 
 class SecondHomework(
@@ -23,8 +24,19 @@ class SecondHomework(
     fun evaluateByMethod(methodName: String, point: Double): Double {
         require(methodName in methodsNames) { "Method name must be in Methods list" }
         val method = manager.getMethod(methodName)
-        var k = -1
-        method.setUp(table.filter { k++; k <= degree }.toSortedMap(), degree)
+        val step = seq.size() / valuesNumber
+        val keys = table.keys.toList()
+        var left: Double = keys[0]
+        var right: Double = keys[degree - 1]
+        for (i in 0..<table.size - degree) {
+            left = keys[i]
+            right = keys[i + degree]
+            if (abs(left + (right - left) / step - point) < step) {
+                break
+            }
+        }
+
+        method.setUp(table.filter { it.key in left..right }.toSortedMap(), degree)
         return method.evaluate(point)
     }
 
