@@ -53,9 +53,11 @@ class UiH3P1 : Ui{
 
     private fun printCommandList() {
         println("Commands list:")
-        println("help                            -print command list")
-        println("back                            -quit the current task")
-        println("evalAll <point>                 -evaluate by all methods")
+        println("help                                -print command list")
+        println("back                                -quit the current task")
+        println("setSeq <left bound> <right bound>   -set up the sequence")
+        println("setEps <epsilon>                    -set up epsilon")
+        println("evalAll <point>                     -evaluate by all methods")
         println()
     }
 
