@@ -4,6 +4,7 @@ import homeworks.first.Homework1
 import homeworks.utils.vo.Seq
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
+import java.math.BigDecimal
 import kotlin.math.pow
 import kotlin.math.roundToLong
 
@@ -13,37 +14,37 @@ import kotlin.math.roundToLong
  * @since 1.0.0
  */
 class Homework1Test {
-    private fun roundToN(value: Double, n: Int): Double {
-        val tenDegree = 10.0.pow(n.toDouble())
-
-        return (value * tenDegree).roundToLong().toDouble() / tenDegree
-    }
-
     @Test
     internal fun `separateSolutions returns right seq list`() {
         // Objects
         val homework = Homework1()
 
-        val realSequences1 = listOf(Seq(-4.0, -3.0), Seq(3.0, 4.0))
-        val realSequences2 = listOf(Seq(-4.0, -3.9), Seq(3.2, 3.3))
-        val realSequences3 = listOf(Seq(-3.97, -3.96), Seq(3.28, 3.29))
-        val realSequences4 = listOf(Seq(-3.968, -3.967), Seq(3.287, 3.288))
-        val realSequences5 = listOf(Seq(-3.9672, -3.9671), Seq(3.2879, 3.288))
-        val realSequences6 = listOf(Seq(-3.96719, -3.96718), Seq(3.2879, 3.28791))
+        val realSequences1 = listOf(Seq((-4).toBigDecimal(), (-3).toBigDecimal()),
+            Seq(3.toBigDecimal(), 4.toBigDecimal()))
+        val realSequences2 = listOf(Seq((-4.0).toBigDecimal(), (-3.9).toBigDecimal()),
+            Seq(3.2.toBigDecimal(), 3.3.toBigDecimal()))
+        val realSequences3 = listOf(Seq((-3.97).toBigDecimal(), (-3.96).toBigDecimal()),
+            Seq(3.28.toBigDecimal(), 3.29.toBigDecimal()))
+        val realSequences4 = listOf(Seq((-3.968).toBigDecimal(), (-3.967).toBigDecimal()),
+            Seq(3.287.toBigDecimal(), 3.288.toBigDecimal()))
+        val realSequences5 = listOf(Seq((-3.9672).toBigDecimal(), (-3.9671).toBigDecimal()),
+            Seq(3.2879.toBigDecimal(), 3.288.toBigDecimal().setScale(4)))
+        val realSequences6 = listOf(Seq((-3.96719).toBigDecimal(), (-3.96718).toBigDecimal()),
+            Seq(3.2879.toBigDecimal().setScale(5), 3.28791.toBigDecimal()))
 
         // Execution
         val sequences1 = homework.separateSolutions(10)
-            .map { Seq(roundToN(it.left, 6), roundToN(it.right, 6)) }
+            .map { Seq(it.left.setScale(0), it.right.setScale(0)) }
         val sequences2 = homework.separateSolutions(100)
-            .map { Seq(roundToN(it.left, 6), roundToN(it.right, 6)) }
+            .map { Seq(it.left.setScale(1), it.right.setScale(1)) }
         val sequences3 = homework.separateSolutions(1000)
-            .map { Seq(roundToN(it.left, 6), roundToN(it.right, 6)) }
+            .map { Seq(it.left.setScale(2), it.right.setScale(2)) }
         val sequences4 = homework.separateSolutions(10000)
-            .map { Seq(roundToN(it.left, 6), roundToN(it.right, 6)) }
+            .map { Seq(it.left.setScale(3), it.right.setScale(3)) }
         val sequences5 = homework.separateSolutions(100000)
-            .map { Seq(roundToN(it.left, 6), roundToN(it.right, 6)) }
+            .map { Seq(it.left.setScale(4), it.right.setScale(4)) }
         val sequences6 = homework.separateSolutions(1000000)
-            .map { Seq(roundToN(it.left, 6), roundToN(it.right, 6)) }
+            .map { Seq(it.left.setScale(5), it.right.setScale(5)) }
 
         // Verification
         assertEquals(realSequences1, sequences1)

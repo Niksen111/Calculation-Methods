@@ -3,22 +3,22 @@ package homeworks.first.methods.impl
 import homeworks.first.methods.Method
 import homeworks.utils.vo.Seq
 import homeworks.first.utils.vo.SolutionInfo
-import kotlin.math.abs
+import java.math.BigDecimal
 
 class BisectionMethod : Method {
     override fun findSolution(
-        func: (Double) -> Double,
+        func: (BigDecimal) -> BigDecimal,
         sequence: Seq,
-        epsilon: Double,
-        firstDerivative: (Double) -> Double,
-        secondDerivative: (Double) -> Double
+        epsilon: BigDecimal,
+        firstDerivative: (BigDecimal) -> BigDecimal,
+        secondDerivative: (BigDecimal) -> BigDecimal
     ): SolutionInfo {
-        if (func(sequence.left) == 0.0) {
+        if (func(sequence.left) == BigDecimal.ZERO) {
             return SolutionInfo(
                 getMethodName(),
                 sequence.left,
-                0.0,
-                abs(func(sequence.left)),
+                BigDecimal.ZERO,
+                func(sequence.left).abs(),
                 0
             )
         }
@@ -26,10 +26,10 @@ class BisectionMethod : Method {
         var counter = 0
         var currSeq = sequence
 
-        while (currSeq.right - currSeq.left >= 2 * epsilon) {
-            val middle = (currSeq.left + currSeq.right) / 2
+        while (currSeq.right.minus(currSeq.left) >= BigDecimal.valueOf(2).multiply(epsilon)) {
+            val middle = (currSeq.left + currSeq.right).divide(2.0.toBigDecimal())
 
-            currSeq = if (func(middle) * func(currSeq.right) <= 0) {
+            currSeq = if (func(middle).multiply(func(currSeq.right)) <= BigDecimal.ZERO) {
                 Seq(middle, currSeq.right)
             } else {
                 Seq(currSeq.left, middle)
@@ -38,13 +38,13 @@ class BisectionMethod : Method {
             ++counter
         }
 
-        val solution = (currSeq.left + currSeq.right) / 2
+        val solution = (currSeq.left + currSeq.right).divide(2.0.toBigDecimal())
 
         return SolutionInfo(
             getMethodName(),
             solution,
             epsilon,
-            abs(func(solution)),
+            func(solution).abs(),
             counter
         )
     }

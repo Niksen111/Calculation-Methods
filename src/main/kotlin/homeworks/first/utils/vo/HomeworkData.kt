@@ -1,11 +1,12 @@
 package homeworks.first.utils.vo
 
 import homeworks.utils.vo.Seq
+import java.math.BigDecimal
 
 data class HomeworkData(
-    var func: (Double) -> (Double),
+    var func: (BigDecimal) -> (BigDecimal),
     var seq: Seq,
-    var epsilon: Double,
-    var firstDerivative: (Double) -> (Double),
-    var secondDerivative: (Double) -> (Double)
+    var epsilon: BigDecimal,
+    var firstDerivative: (BigDecimal) -> (BigDecimal),
+    var secondDerivative: (BigDecimal) -> (BigDecimal)
 )

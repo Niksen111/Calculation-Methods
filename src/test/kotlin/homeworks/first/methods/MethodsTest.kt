@@ -3,8 +3,8 @@ package homeworks.first.methods
 import homeworks.first.Homework1
 import homeworks.first.Homework1.Companion.defaultData
 import org.junit.jupiter.api.Test
+import java.math.BigDecimal
 import kotlin.math.pow
-import kotlin.math.roundToLong
 import kotlin.test.assertEquals
 
 /**
@@ -12,12 +12,6 @@ import kotlin.test.assertEquals
  * @since 1.0.0
  */
 class MethodsTest {
-    private fun roundToN(value: Double, n: Int): Double {
-        val tenDegree = 10.0.pow(n.toDouble())
-
-        return (value * tenDegree).roundToLong().toDouble() / tenDegree
-    }
-
     private val methodsManager = MethodsManager()
 
     fun checkOnTaskData(methodName: String) {
@@ -36,7 +30,7 @@ class MethodsTest {
         )
 
         // Verification
-        assertEquals(-3.96719, roundToN(result.result, 5))
+        assertEquals((-3.96719).toBigDecimal(), result.result.setScale(5))
     }
 
     @Test

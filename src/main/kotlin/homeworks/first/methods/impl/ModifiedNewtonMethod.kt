@@ -3,23 +3,23 @@ package homeworks.first.methods.impl
 import homeworks.first.methods.Method
 import homeworks.utils.vo.Seq
 import homeworks.first.utils.vo.SolutionInfo
+import java.math.BigDecimal
 import java.util.*
-import kotlin.math.abs
 
 class ModifiedNewtonMethod : Method {
     override fun findSolution(
-        func: (Double) -> Double,
+        func: (BigDecimal) -> BigDecimal,
         sequence: Seq,
-        epsilon: Double,
-        firstDerivative: (Double) -> Double,
-        secondDerivative: (Double) -> Double
+        epsilon: BigDecimal,
+        firstDerivative: (BigDecimal) -> BigDecimal,
+        secondDerivative: (BigDecimal) -> BigDecimal
     ): SolutionInfo {
-        if (func(sequence.left) == 0.0) {
+        if (func(sequence.left) == BigDecimal.ZERO) {
             return SolutionInfo(
                 getMethodName(),
                 sequence.left,
-                0.0,
-                abs(func(sequence.left)),
+                BigDecimal.ZERO,
+                func(sequence.left).abs(),
                 0
             )
         }
@@ -27,16 +27,16 @@ class ModifiedNewtonMethod : Method {
         val rand = Random(System.currentTimeMillis())
         var counter = 0
 
-        var previousSolution: Double = sequence.left + rand.nextDouble() * (sequence.right - sequence.left)
-        while (secondDerivative(previousSolution) * func(previousSolution) <= 0) {
-            previousSolution = sequence.left + rand.nextDouble() * (sequence.right - sequence.left)
+        var previousSolution: BigDecimal = sequence.left + rand.nextDouble().toBigDecimal() * (sequence.right - sequence.left)
+        while (secondDerivative(previousSolution) * func(previousSolution) <= BigDecimal.ZERO) {
+            previousSolution = sequence.left + rand.nextDouble().toBigDecimal() * (sequence.right - sequence.left)
         }
 
-        val constDerivative: Double = firstDerivative(previousSolution)
+        val constDerivative: BigDecimal = firstDerivative(previousSolution)
 
-        var currentSolution: Double = previousSolution - func(previousSolution) / constDerivative
+        var currentSolution: BigDecimal = previousSolution - func(previousSolution) / constDerivative
 
-        while (abs(currentSolution - previousSolution) >= epsilon) {
+        while ((currentSolution - previousSolution).abs() >= epsilon) {
             previousSolution = currentSolution
             currentSolution = previousSolution - func(previousSolution) / constDerivative
             ++counter
@@ -45,8 +45,8 @@ class ModifiedNewtonMethod : Method {
         return SolutionInfo(
             getMethodName(),
             currentSolution,
-            0.0,
-            abs(func(currentSolution)),
+            BigDecimal.ZERO,
+            func(currentSolution).abs(),
             counter
         )
     }

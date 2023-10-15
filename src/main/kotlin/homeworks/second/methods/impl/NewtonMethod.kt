@@ -2,10 +2,11 @@ package homeworks.second.methods.impl
 
 import homeworks.second.methods.InterpolationMethod
 import homeworks.utils.Polynomial
+import java.math.BigDecimal
 import java.util.SortedMap
 
 class NewtonMethod : InterpolationMethod {
-    override var table: SortedMap<Double, Double> = sortedMapOf()
+    override var table: SortedMap<BigDecimal, BigDecimal> = sortedMapOf()
         private set
 
     override var degree: Int = 0
@@ -13,7 +14,7 @@ class NewtonMethod : InterpolationMethod {
 
     private var polyElements: MutableList<List<Polynomial>> = mutableListOf()
 
-    override fun setUp(table: SortedMap<Double, Double>, degree: Int) {
+    override fun setUp(table: SortedMap<BigDecimal, BigDecimal>, degree: Int) {
         this.table = table
         this.degree = degree
         this.polyElements = createPolynomial()
@@ -22,12 +23,12 @@ class NewtonMethod : InterpolationMethod {
     private fun createPolynomial(): MutableList<List<Polynomial>> {
         val elems: MutableList<List<Polynomial>> = mutableListOf()
         table.map { entry ->
-            val result = mutableListOf(Polynomial(doubleArrayOf(calcDividedDifference(entry.key))))
+            val result = mutableListOf(Polynomial(arrayOf(calcDividedDifference(entry.key))))
 
             table.filter {
                 it.key < entry.key
             }.map {
-                result.add(Polynomial(doubleArrayOf(-it.key, 1.0)))
+                result.add(Polynomial(arrayOf ( -(it.key), BigDecimal.valueOf(1.0)) ))
             }
 
             elems.add(result)
@@ -36,10 +37,10 @@ class NewtonMethod : InterpolationMethod {
         return elems
     }
 
-    override fun evaluate(point: Double): Double {
-        var result = 0.0
+    override fun evaluate(point: BigDecimal): BigDecimal {
+        var result = BigDecimal.ZERO
         polyElements.map { listPolynomial ->
-            var temp = 1.0
+            var temp = BigDecimal.ONE
 
             listPolynomial.map {
                 temp *= it.evaluate(point)
@@ -51,15 +52,15 @@ class NewtonMethod : InterpolationMethod {
         return result
     }
 
-    private fun calcDividedDifference(x: Double): Double {
-        var result = 0.0
+    private fun calcDividedDifference(x: BigDecimal): BigDecimal {
+        var result = BigDecimal.ZERO
 
         val tablePart = table.filter {
             it.key <= x
         }
 
         tablePart.map { entry ->
-            var product = 1.0
+            var product = BigDecimal.ONE
             tablePart.map {
                 if (entry.key != it.key) {
                     product *= entry.key - it.key

@@ -3,37 +3,38 @@ package homeworks.first.methods.impl
 import homeworks.first.methods.Method
 import homeworks.utils.vo.Seq
 import homeworks.first.utils.vo.SolutionInfo
+import java.math.BigDecimal
 import kotlin.math.abs
 
 class SecantMethod : Method {
     override fun findSolution(
-        func: (Double) -> Double,
+        func: (BigDecimal) -> BigDecimal,
         sequence: Seq,
-        epsilon: Double,
-        firstDerivative: (Double) -> Double,
-        secondDerivative: (Double) -> Double
+        epsilon: BigDecimal,
+        firstDerivative: (BigDecimal) -> BigDecimal,
+        secondDerivative: (BigDecimal) -> BigDecimal
     ): SolutionInfo {
-        if (func(sequence.left) == 0.0) {
+        if (func(sequence.left) == BigDecimal.ZERO) {
             return SolutionInfo(
                 getMethodName(),
                 sequence.left,
-                0.0,
-                abs(func(sequence.left)),
+                BigDecimal.ZERO,
+                func(sequence.left).abs(),
                 0
-                )
+            )
         }
 
-        var previousSolution: Double = sequence.left
+        var previousSolution: BigDecimal = sequence.left
 
-        var currentSolution: Double = sequence.right
+        var currentSolution: BigDecimal = sequence.right
 
-        var nextSolution: Double =
+        var nextSolution: BigDecimal =
             currentSolution - func(currentSolution) / (func(currentSolution) - func(
                 previousSolution
             )) * (currentSolution - previousSolution)
         var counter = 0
 
-        while (abs(currentSolution - previousSolution) >= epsilon) {
+        while ((currentSolution - previousSolution).abs() >= epsilon) {
             previousSolution = currentSolution
             currentSolution = nextSolution
             nextSolution =
@@ -46,8 +47,8 @@ class SecantMethod : Method {
         return SolutionInfo(
             getMethodName(),
             currentSolution,
-            0.0,
-            abs(func(currentSolution)),
+            BigDecimal.ZERO,
+            func(currentSolution).abs(),
             counter
         )
     }

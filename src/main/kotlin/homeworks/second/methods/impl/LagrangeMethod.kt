@@ -2,40 +2,48 @@ package homeworks.second.methods.impl
 
 import homeworks.second.methods.InterpolationMethod
 import homeworks.utils.Polynomial
+import java.math.BigDecimal
 import java.util.SortedMap
 
 class LagrangeMethod : InterpolationMethod {
-    override var table: SortedMap<Double, Double> = sortedMapOf()
+    override var table: SortedMap<BigDecimal, BigDecimal> = sortedMapOf()
         private set
 
     override var degree: Int = 0
         private set
 
-    override fun setUp(table: SortedMap<Double, Double>, degree: Int) {
+    var polynomial: Polynomial = Polynomial(arrayOf(BigDecimal.ZERO))
+        private set
+
+    override fun setUp(table: SortedMap<BigDecimal, BigDecimal>, degree: Int) {
         this.table = table
         this.degree = degree
+        this.polynomial = createPolynomial()
     }
 
-    override fun evaluate(point: Double): Double {
-        var result = 0.0
-
+    private fun createPolynomial(): Polynomial {
+        var result = Polynomial(arrayOf(BigDecimal.ZERO))
         table.map { entry ->
-            var lI = entry.value
+            var lI = Polynomial(arrayOf(entry.value))
             val xI = entry.key
-            var divide = 1.0
+            var divide = BigDecimal.ONE
             table.map {
-                if (xI != it.key) {
+                if (it.key != xI) {
                     val xJ = it.key
-                    divide *= xI - xJ
-                    lI *= (point - xJ)
+                    divide *= (xI - xJ)
+                    lI *= Polynomial(arrayOf(-xJ, 1.0.toBigDecimal()))
                 }
             }
 
-            lI /= divide
+            lI *= Polynomial(arrayOf(BigDecimal.ONE / divide))
             result += lI
         }
 
         return result
+    }
+
+    override fun evaluate(point: BigDecimal): BigDecimal {
+        return polynomial.evaluate(point)
     }
 
     override fun getMethodName() = methodName

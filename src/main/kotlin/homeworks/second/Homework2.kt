@@ -2,12 +2,12 @@ package homeworks.second
 
 import homeworks.second.methods.InterpolationMethodsManager
 import homeworks.utils.vo.Seq
+import java.math.BigDecimal
 import java.util.SortedMap
-import kotlin.math.abs
 import kotlin.math.cos
 
 class Homework2(
-    val function: (Double) -> Double = Homework2.function,
+    val function: (BigDecimal) -> BigDecimal = Homework2.function,
     val seq: Seq = Homework2.seq,
     val valuesNumber: Int = Homework2.valuesNumber,
     val degree: Int = Homework2.degree
@@ -17,21 +17,21 @@ class Homework2(
         require(valuesNumber > 0) { "Values number must be more then 0" }
     }
 
-    val table: SortedMap<Double, Double> = setTable()
+    val table: SortedMap<BigDecimal, BigDecimal> = setTable()
 
     val manager = InterpolationMethodsManager()
 
-    fun evaluateByMethod(methodName: String, point: Double): Double {
+    fun evaluateByMethod(methodName: String, point: BigDecimal): BigDecimal {
         require(methodName in methodsNames) { "Method name must be in Methods list" }
         val method = manager.getMethod(methodName)
-        val step = seq.size() / valuesNumber
+        val step = seq.size() / valuesNumber.toBigDecimal()
         val keys = table.keys.toList()
-        var left: Double = keys[0]
-        var right: Double = keys[degree - 1]
+        var left: BigDecimal = keys[0]
+        var right: BigDecimal = keys[degree - 1]
         for (i in 0..<table.size - degree) {
             left = keys[i]
             right = keys[i + degree]
-            if (abs(left + (right - left) / step - point) < step) {
+            if ((left + (right - left) / step - point).abs() < step) {
                 break
             }
         }
@@ -40,11 +40,11 @@ class Homework2(
         return method.evaluate(point)
     }
 
-    private fun setTable(): SortedMap<Double, Double> {
-        val initTable = HashMap<Double, Double>()
-        val step = seq.size() / valuesNumber
+    private fun setTable(): SortedMap<BigDecimal, BigDecimal> {
+        val initTable = HashMap<BigDecimal, BigDecimal>()
+        val step = seq.size() / valuesNumber.toBigDecimal()
         for (i in 0..<valuesNumber) {
-            val x = seq.left + i * step
+            val x = seq.left + i.toBigDecimal() * step
             initTable[x] = function(x)
         }
 
@@ -57,10 +57,10 @@ class Homework2(
 
     companion object {
         val methodsNames = listOf("Newton", "Lagrange")
-        val function = { x: Double ->
-            cos(x) + 2 * x
+        val function = { x: BigDecimal ->
+            cos(x.toDouble()).toBigDecimal() + 2.0.toBigDecimal() * x
         }
-        val seq = Seq( 0.5, 1.8 )
+        val seq = Seq( 0.5.toBigDecimal(), 1.8.toBigDecimal() )
         const val valuesNumber = 14
         const val degree = 7
     }

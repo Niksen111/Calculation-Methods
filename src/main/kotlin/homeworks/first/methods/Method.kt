@@ -2,14 +2,15 @@ package homeworks.first.methods
 
 import homeworks.utils.vo.Seq
 import homeworks.first.utils.vo.SolutionInfo
+import java.math.BigDecimal
 
 interface Method {
     fun findSolution(
-        func: (Double) -> (Double),
+        func: (BigDecimal) -> (BigDecimal),
         sequence: Seq,
-        epsilon: Double,
-        firstDerivative: (Double) -> (Double),
-        secondDerivative: (Double) -> (Double)
+        epsilon: BigDecimal,
+        firstDerivative: (BigDecimal) -> (BigDecimal),
+        secondDerivative: (BigDecimal) -> (BigDecimal)
     ): SolutionInfo
 
     fun getMethodName(): String

@@ -4,15 +4,16 @@ import homeworks.utils.ui.Ui
 import homeworks.utils.vo.Seq
 import homeworks.first.utils.SolutionInfoProcessor
 import homeworks.first.Homework1.Companion.defaultData
+import java.math.BigDecimal
 
 /**
  * @author nksenchik
  * @since 1.0.0
  */
 class UiH1 : Ui {
-    private var seq = Seq(-5.0, 5.0)
+    private var seq = Seq((-5.0).toBigDecimal(), 5.0.toBigDecimal())
     private var number = 1000
-    private var epsilon = 1.0E-6
+    private var epsilon = 1.0E-6.toBigDecimal()
     private var homework = Homework1(
         func = defaultData.func,
         seq = seq,
@@ -42,7 +43,7 @@ class UiH1 : Ui {
         )
     }
 
-    private fun setSeq(left: Double, right: Double) {
+    private fun setSeq(left: BigDecimal, right: BigDecimal) {
         if (left >= right) {
             println("[ERROR]: Failed to set up sequence")
             println("[ERROR]: Left bound must be less then right")
@@ -66,8 +67,8 @@ class UiH1 : Ui {
     }
 
 
-    private fun setEpsilon(eps: Double) {
-        if (eps <= 0.0) {
+    private fun setEpsilon(eps: BigDecimal) {
+        if (eps <= BigDecimal.ZERO) {
             println("[ERROR]: Failed to set up epsilon")
             println("[ERROR]: Epsilon must be more then 0")
             println()
@@ -139,11 +140,11 @@ class UiH1 : Ui {
                             continue
                         }
 
-                        val left: Double
-                        val right: Double
+                        val left: BigDecimal
+                        val right: BigDecimal
                         try {
-                            left = input[1].toDouble()
-                            right = input[2].toDouble()
+                            left = input[1].toBigDecimal()
+                            right = input[2].toBigDecimal()
                         } catch (e: Exception) {
                             printErr()
                             continue
@@ -175,9 +176,9 @@ class UiH1 : Ui {
                             continue
                         }
 
-                        val eps: Double
+                        val eps: BigDecimal
                         try {
-                            eps = input[1].toDouble()
+                            eps = input[1].toBigDecimal()
                         } catch (e: Exception) {
                             printErr()
                             continue

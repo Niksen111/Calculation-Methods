@@ -1,10 +1,12 @@
 package homeworks.utils
 
+import java.math.BigDecimal
+
 class Polynomial(
-    private var coefficients: DoubleArray
+    private var coefficients: Array<BigDecimal>
 ) {
     private val size: Int
-    private val older: Double
+    private val older: BigDecimal
 
     init {
         require(coefficients.isNotEmpty()) { "Coefficients must not be empty" }
@@ -13,15 +15,15 @@ class Polynomial(
         older = coefficients.last()
     }
 
-    private fun getExp(array: DoubleArray): Int {
+    private fun getExp(array: Array<BigDecimal>): Int {
         return array.foldIndexed(0) { index, acc, d ->
-            if (d != 0.0) index else acc
+            if (d != BigDecimal.ZERO) index else acc
         }
     }
 
     operator fun plus(other: Polynomial): Polynomial {
-        val max: DoubleArray
-        val min: DoubleArray
+        val max: Array<BigDecimal>
+        val min: Array<BigDecimal>
         if (size >= other.size) {
             max = coefficients
             min = other.coefficients
@@ -30,7 +32,7 @@ class Polynomial(
             min = coefficients
         }
 
-        val resultCoefficients = DoubleArray(max.size)
+        val resultCoefficients = Array<BigDecimal>(max.size) { BigDecimal.ZERO }
         for (i in min.indices) {
             resultCoefficients[i] = min[i]
         }
@@ -43,8 +45,8 @@ class Polynomial(
     }
 
     operator fun minus(other: Polynomial): Polynomial {
-        val max: DoubleArray
-        val min: DoubleArray
+        val max: Array<BigDecimal>
+        val min: Array<BigDecimal>
         if (size > other.size || (size == other.size && older >= other.older)) {
             max = coefficients
             min = other.coefficients
@@ -53,7 +55,7 @@ class Polynomial(
             min = coefficients
         }
 
-        val resultCoefficients = DoubleArray(max.size)
+        val resultCoefficients = Array<BigDecimal>(max.size) { BigDecimal.ZERO }
         min.forEachIndexed { i, d ->
             resultCoefficients[i] = max[i] - d
         }
@@ -62,7 +64,7 @@ class Polynomial(
     }
 
     operator fun times(other: Polynomial): Polynomial {
-        val product = DoubleArray(getExp(coefficients) + getExp(other.coefficients) + 1)
+        val product = Array<BigDecimal>(getExp(coefficients) + getExp(other.coefficients) + 1) { BigDecimal.ZERO }
         for (i in coefficients.indices) {
             for (j in other.coefficients.indices) {
                 product[i + j] += coefficients[i] * other.coefficients[j]
@@ -72,9 +74,9 @@ class Polynomial(
         return Polynomial(product)
     }
 
-    fun evaluate(x: Double): Double {
-        var result = 0.0
-        var currentExp = 1.0
+    fun evaluate(x: BigDecimal): BigDecimal {
+        var result = BigDecimal.ZERO
+        var currentExp = BigDecimal.ONE
         for (i in coefficients.indices) {
             result += coefficients[i] * currentExp
             currentExp *= x
@@ -106,8 +108,8 @@ class Polynomial(
     override fun toString(): String {
         var str = ""
         for (i in coefficients.indices.reversed()) {
-            if (coefficients[i] == 0.0) continue
-            val plus = if (coefficients[i] >= 0 && coefficients.size > 1) "+" else ""
+            if (coefficients[i] == BigDecimal.ZERO) continue
+            val plus = if (coefficients[i] >= BigDecimal.ZERO && coefficients.size > 1) "+" else ""
             val degree = if (i > 0) "x^($i)" else ""
             str = str + plus + coefficients[i] + degree
         }

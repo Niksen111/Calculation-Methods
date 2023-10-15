@@ -4,18 +4,18 @@ import homeworks.first.methods.MethodsManager
 import homeworks.first.utils.vo.HomeworkData
 import homeworks.utils.vo.Seq
 import homeworks.first.utils.vo.SolutionInfo
-import kotlin.math.pow
+import java.math.BigDecimal
 
 /**
  * @author nksenchik
  * @since 1.0.0
  */
 class Homework1(
-    val func: (Double) -> (Double),
+    val func: (BigDecimal) -> (BigDecimal),
     val seq: Seq,
-    val epsilon: Double,
-    val firstDerivative: (Double) -> (Double),
-    val secondDerivative: (Double) -> (Double)
+    val epsilon: BigDecimal,
+    val firstDerivative: (BigDecimal) -> (BigDecimal),
+    val secondDerivative: (BigDecimal) -> (BigDecimal)
 ) {
     constructor(homeworkData: HomeworkData) : this(
         homeworkData.func,
@@ -31,14 +31,14 @@ class Homework1(
     fun separateSolutions(subsegmentsNumber: Int): List<Seq> {
         require(subsegmentsNumber > 1) { "Subsegments number must be more the 1" }
 
-        val tabulationStep = (seq.right - seq.left) / subsegmentsNumber
+        val tabulationStep = (seq.right - seq.left).divide(subsegmentsNumber.toBigDecimal())
         var currSeq = Seq(seq.left, seq.left + tabulationStep)
         val sequences = ArrayList<Seq>()
 
         for (i in 1..subsegmentsNumber) {
             val y1 = func(currSeq.left)
             val y2 = func(currSeq.right)
-            if (y1 * y2 < 0) {
+            if (y1 * y2 < BigDecimal.ZERO) {
                 sequences.add(currSeq)
             }
 
@@ -58,15 +58,17 @@ class Homework1(
     companion object {
         val methodsNames = listOf("Bisection", "Newton", "Modified_Newton", "Secant")
         val defaultData = HomeworkData({ x ->
-            1.2 * x.pow(4) + 2 * x.pow(3) - 13 * x.pow(2) - 14.2 * x - 24.1
+            1.2.toBigDecimal() * x.pow(4) + 2.0.toBigDecimal() * x.pow(3) -
+                13.0.toBigDecimal() * x.pow(2) - 14.2.toBigDecimal() * x - 24.1.toBigDecimal()
             },
-            Seq(-5.0, 5.0),
-            1.0E-6,
+            Seq((-5.0).toBigDecimal(), 5.0.toBigDecimal()),
+            1.0E-6.toBigDecimal(),
             { x ->
-                4.8 * x.pow(3) + 6 * x.pow(2) - 26 * x - 14.2
+                4.8.toBigDecimal() * x.pow(3) + 6.0.toBigDecimal() * x.pow(2) -
+                    26.0.toBigDecimal() * x - 14.2.toBigDecimal()
             },
             { x ->
-                14.4 * x.pow(2) + 12 * x - 26
+                14.4.toBigDecimal() * x.pow(2) + 12.0.toBigDecimal() * x - 26.0.toBigDecimal()
             }
         )
     }

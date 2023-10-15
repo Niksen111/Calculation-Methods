@@ -2,7 +2,7 @@ package homeworks.second
 
 import homeworks.utils.ui.Ui
 import homeworks.utils.vo.Seq
-import kotlin.math.abs
+import java.math.BigDecimal
 
 class UiH2 : Ui {
     private var valuesNumber = Homework2.valuesNumber
@@ -31,7 +31,7 @@ class UiH2 : Ui {
         setHomework()
     }
 
-    private fun setSeq(left: Double, right: Double) {
+    private fun setSeq(left: BigDecimal, right: BigDecimal) {
         if (left >= right) {
             println("[ERROR]: Failed to set up sequence")
             println("[ERROR]: Left bound must be less then right")
@@ -121,11 +121,11 @@ class UiH2 : Ui {
                             continue
                         }
 
-                        val left: Double
-                        val right: Double
+                        val left: BigDecimal
+                        val right: BigDecimal
                         try {
-                            left = input[1].toDouble()
-                            right = input[2].toDouble()
+                            left = input[1].toBigDecimal()
+                            right = input[2].toBigDecimal()
                         } catch (e: Exception) {
                             printErr()
                             continue
@@ -167,13 +167,13 @@ class UiH2 : Ui {
                             continue
                         }
 
-                        val point = input[1].toDouble()
+                        val point = input[1].toBigDecimal()
 
                         Homework2.methodsNames.forEach {
                             println("Method name: $it")
                             val result = homework.evaluateByMethod(it, point)
                             println("Result: $result")
-                            println("Error: ${abs(Homework2.function(point) - result)}")
+                            println("Error: ${(Homework2.function(point) - result).abs()}")
                             println()
                         }
                     }
