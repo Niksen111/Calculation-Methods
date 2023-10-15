@@ -3,10 +3,10 @@ package homeworks.third.first
 import homeworks.utils.ui.Ui
 
 class UiH3P1 : Ui{
-    private var homework = null
+    private var homework = Homework3P1()
 
     private fun setHomework() {
-        TODO()
+        homework = Homework3P1()
     }
 
     private fun printTaskInfo() {
@@ -18,7 +18,8 @@ class UiH3P1 : Ui{
     private fun printCommandList() {
         println("Commands list:")
         println("help                            -print command list")
-        println("back                            -back ")
+        println("back                            -quit the current task")
+        println("evalAll <point>                 -evaluate by all methods")
         println()
     }
 
@@ -56,6 +57,17 @@ class UiH3P1 : Ui{
                         }
 
                         break
+                    }
+                    "evalAll" -> {
+                        if (input.size != 2) {
+                            printErr()
+                            continue
+                        }
+
+                        val point = input[1].toDouble()
+
+                        println(homework.evalByFirstMethod(point))
+                        println(homework.evalBySecondMethod(point))
                     }
                     else -> {
                         printErr()
