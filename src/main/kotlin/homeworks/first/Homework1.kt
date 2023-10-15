@@ -11,11 +11,11 @@ import kotlin.math.pow
  * @since 1.0.0
  */
 class Homework1(
-    val func: (Double) -> (Double),
+    val func: (Double) -> Double,
     val seq: Seq,
     val epsilon: Double,
-    val firstDerivative: (Double) -> (Double),
-    val secondDerivative: (Double) -> (Double)
+    val firstDerivative: (Double) -> Double,
+    val secondDerivative: (Double) -> Double
 ) {
     constructor(homeworkData: HomeworkData) : this(
         homeworkData.func,
