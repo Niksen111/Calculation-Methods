@@ -11,7 +11,7 @@ class Homework2(
     val seq: Seq = Homework2.seq,
     val valuesNumber: Int = Homework2.valuesNumber,
     val degree: Int = Homework2.degree,
-    val table: SortedMap<Double, Double> = Homework2.createTable(function, seq, valuesNumber)
+    val table: SortedMap<Double, Double> = createTable(function, seq, valuesNumber)
 ) {
     init {
         require(degree < valuesNumber) { "Values number should be more then degree" }
@@ -30,7 +30,8 @@ class Homework2(
         for (i in 0..<table.size - degree) {
             left = keys[i]
             right = keys[i + degree]
-            if (abs(left + (right - left) / step - point) < step) {
+
+            if (left + (right - left) / step - point > 0) {
                 break
             }
         }
