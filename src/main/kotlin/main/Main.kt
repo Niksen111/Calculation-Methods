@@ -8,7 +8,8 @@ private val taskMap = mapOf(
    "1" to "UiH1",
    "2" to "UiH2",
    "3.1" to "UiH3P1",
-   "3.2" to "UiH3P2"
+   "3.2" to "UiH3P2",
+   "4.1" to "UiH4P1"
 )
 
 private fun printInfo() {

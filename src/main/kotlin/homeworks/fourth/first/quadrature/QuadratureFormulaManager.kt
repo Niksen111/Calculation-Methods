@@ -2,7 +2,7 @@ package homeworks.fourth.first.quadrature
 
 import homeworks.fourth.first.quadrature.impl.*
 
-class QuadratureFormulaManager {
+internal class QuadratureFormulaManager {
     private val formulas = listOf(
         LeftRectangleQF(),
         MiddleRectangleQF(),
@@ -14,5 +14,7 @@ class QuadratureFormulaManager {
 
     private val formulasByName = formulas.associateBy { it.getName() }
 
-    fun getFormulaByName(name: String) = formulasByName[name]
+    fun getFormulaByName(name: String) = formulasByName.getValue(name)
+
+    fun getNames() = formulas.map { it.getName() }
 }
