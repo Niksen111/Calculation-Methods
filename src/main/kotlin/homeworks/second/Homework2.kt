@@ -31,7 +31,7 @@ class Homework2(
             left = keys[i]
             right = keys[i + degree]
 
-            if (left + (right - left) / step - point > 0) {
+            if (left + (right - left) / 2 - point > 0) {
                 break
             }
         }

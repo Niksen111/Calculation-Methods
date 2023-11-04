@@ -3,10 +3,10 @@ package homeworks.third.second
 import homeworks.utils.ui.Ui
 
 class UiH3P2 : Ui {
-    private var homework = null
+    private var homework = Homework3P2()
 
     private fun setHomework() {
-        TODO()
+        homework = Homework3P2()
     }
 
     private fun printTaskInfo() {
@@ -18,7 +18,7 @@ class UiH3P2 : Ui {
     private fun printCommandList() {
         println("Commands list:")
         println("help                            -print command list")
-        println("back                            -back ")
+        println("back                            -quit the current task")
         println()
     }
 
