@@ -9,4 +9,8 @@ data class Seq(
     }
 
     fun size() = right - left
+
+    override fun toString(): String {
+        return "[$left; $right]"
+    }
 }
