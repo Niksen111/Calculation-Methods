@@ -8,7 +8,8 @@ data class Seq(
         require(right >= left)
     }
 
-    fun size() = right - left
+    val size = right - left
+    val middle = (right - left) / 2
 
     override fun toString(): String {
         return "[$left; $right]"
