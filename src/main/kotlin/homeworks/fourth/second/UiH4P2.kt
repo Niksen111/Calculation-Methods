@@ -1,22 +1,24 @@
-package homeworks.fourth.first
+package homeworks.fourth.second
 
+import homeworks.fourth.first.Homework4P1
 import homeworks.utils.ui.Ui
 import homeworks.utils.vo.Seq
 import kotlin.math.pow
 
-class UiH4P1 : Ui {
-    private var homework = Homework4P1()
-    private val function = Homework4P1.function
-    private val integral = Homework4P1.integral
+class UiH4P2 : Ui {
+    private var homework = Homework4P2()
+    private var function = Homework4P1.function
+    private var integral = Homework4P1.integral
     private var seq = Homework4P1.seq
-
+    private var m = 10
+    
     private fun setHomework() {
-        homework = Homework4P1(function, integral, seq)
+        homework = Homework4P2(function, integral)
     }
 
     private fun setParams() {
         println("Enter left and right boundaries of the seq:")
-        val input = readln().split(" ")
+        var input = readln().split(" ")
         if (input.size != 2) {
             printErr()
             return
@@ -25,6 +27,19 @@ class UiH4P1 : Ui {
         val left: Double = input[1].toDouble()
         val right: Double = input[2].toDouble()
         setSeq(left, right)
+
+        println("Enter integer m:")
+        input = readln().split(" ")
+        if (input.size != 1) {
+            printErr()
+            return
+        }
+        
+        setM(input[0].toInt())
+    }
+    
+    private fun setM(m: Int) {
+        this.m = m
     }
 
     private fun setSeq(left: Double, right: Double) {
@@ -36,20 +51,26 @@ class UiH4P1 : Ui {
         }
 
         this.seq = Seq(left, right)
-        setHomework()
     }
 
     private fun printTaskInfo() {
-        println("Task №4.1 approximate calculation of the integral using quadrature formulas")
-        println("(We consider the weight p(x) = 1.)")
-        println("Let us calculate approximately the value of the integral of f(x) over [a, b] using:")
-        println("• QF of the left rectangle;")
-        println("• QF of the right rectangle;")
-        println("• QF of the middle rectangle;")
-        println("• QF trapezoid;")
-        println("• Simpson's QF (or parabolas);")
-        println("• QF 3/8.")
-        printParameters()
+        println("Task №4.2 Approximate calculation of the integral using compound quadrature formulas")
+        println(
+            """
+                Problem parameters: integration limits a, b, weight function ρ(x) and
+                function f(x), m – number of division intervals [a, b].
+                We consider the weight p(x) = 1.
+                Calculate approximately and print the value of the integral of ρ(x)∙f(x)
+                by [a, b] using SCF
+                • Left rectangles;
+                • Right rectangles;
+                • medium rectangles;
+                • trapezoid;
+                • Simpson
+                with parameter m. Let us denote these values by J(h), here h = (b‒a)/m).
+                
+                """.trimIndent()
+        )
         println()
     }
 
@@ -67,6 +88,7 @@ class UiH4P1 : Ui {
     private fun printParameters() {
         println("Function: 3 * x^2 + cos(x)")
         println("Sequence: $seq")
+        println("M: $m")
     }
 
     private fun printErr() {
@@ -74,42 +96,58 @@ class UiH4P1 : Ui {
         println()
     }
 
-    private fun tests() {
-        println("Tests: ")
+    private fun evaluateByAllFormulas() {
+        println("Real value of the integral: ${integral(seq.right) - integral(seq.left)}")
         println()
-        val seq = Seq(0.0, 10.0)
-        println("Seq [0; 10], f(x) = 1, I = x")
-        var homework = Homework4P1({ 1.0 }, { x -> x }, seq)
-        evaluateByAllFormulas(homework)
-        println()
-        println("Seq [0; 10], f(x) = 2x, I = x^2")
-        homework = Homework4P1({ x -> 2 * x }, { x -> x.pow(2) }, seq)
-        evaluateByAllFormulas(homework)
-        println()
-        println("Seq [0; 10], f(x) = 3x^2, I = x^3")
-        homework = Homework4P1({ x -> 3 * x.pow(2) }, { x -> x.pow(3) }, seq)
-        evaluateByAllFormulas(homework)
-        println()
-        println("Seq [0; 10], f(x) = 4x^3, I = x^4")
-        homework = Homework4P1({ x -> 4 * x.pow(3) }, { x -> x.pow(4) }, seq)
-        evaluateByAllFormulas(homework)
-        println()
-        println("Seq [0; 10], f(x) = 5x^4, I = x^5")
-        homework = Homework4P1({ x -> 5 * x.pow(4) }, { x -> x.pow(5) }, seq)
-        evaluateByAllFormulas(homework)
-        println()
-    }
-
-    private fun evaluateByAllFormulas(homework: Homework4P1) {
-        println("Real value of the integral: ${homework.integral(homework.seq.right) - homework.integral(homework.seq.left)}")
-        println()
-        homework.getFormulas().forEach { formula ->
+        Homework4P1().getFormulas().forEach { formula ->
             println("Quadrature Formula: $formula")
-            println("Value: ${homework.calculateByFormula(formula)}")
-            println("Absolute error: ${homework.getAbsError(homework.calculateByFormula(formula))}")
+            println("Value: ${homework.evaluateByFormula(formula, seq, m)}")
+            println("Absolute error: ${homework.getAbsError(homework.evaluateByFormula(formula, seq, m), seq)}")
             println()
         }
 
+        println()
+    }
+
+    private fun tests() {
+        println("Tests: ")
+        println()
+        m = 10
+        seq = Seq(0.0, 10.0)
+        
+        println("Seq [0; 10], f(x) = 1, I = x, m = 10")
+        function = { 1.0 }
+        integral = { x -> x }
+        setHomework()
+        evaluateByAllFormulas()
+        println()
+        
+        println("Seq [0; 10], f(x) = 2x, I = x^2, m = 10")
+        function = { x -> 2 * x }
+        integral = { x -> x.pow(2) }
+        setHomework()
+        evaluateByAllFormulas()
+        println()
+        
+        println("Seq [0; 10], f(x) = 3x^2, I = x^3, m = 10")
+        function = { x -> 3 * x.pow(2) }
+        integral = { x -> x.pow(3) }
+        setHomework()
+        evaluateByAllFormulas()
+        println()
+        
+        println("Seq [0; 10], f(x) = 4x^3, I = x^4, m = 10")
+        function = { x -> 4 * x.pow(3) }
+        integral = { x -> x.pow(4) }
+        setHomework()
+        evaluateByAllFormulas()
+        println()
+        
+        println("Seq [0; 10], f(x) = 5x^4, I = x^5, m = 10")
+        function = { x -> 5 * x.pow(4) }
+        integral = { x -> x.pow(5) }
+        setHomework()
+        evaluateByAllFormulas()
         println()
     }
 
@@ -148,7 +186,7 @@ class UiH4P1 : Ui {
                         continue
                     }
 
-                    evaluateByAllFormulas(homework)
+                    evaluateByAllFormulas()
                 }
                 "setParams" -> {
                     if (input.size > 1) {
