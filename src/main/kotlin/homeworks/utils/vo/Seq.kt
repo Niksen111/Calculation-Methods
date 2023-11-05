@@ -9,7 +9,7 @@ data class Seq(
     }
 
     val size = right - left
-    val middle = (right - left) / 2
+    val middle = (right + left) / 2
 
     override fun toString(): String {
         return "[$left; $right]"

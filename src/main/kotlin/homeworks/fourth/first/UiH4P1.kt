@@ -47,7 +47,7 @@ class UiH4P1 : Ui {
         println("• QF of the right rectangle;")
         println("• QF of the middle rectangle;")
         println("• QF trapezoid;")
-        println("• Simpson's CF (or parabolas);")
+        println("• Simpson's QF (or parabolas);")
         println("• QF 3/8.")
         printParameters()
         println()
