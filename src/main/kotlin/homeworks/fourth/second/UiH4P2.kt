@@ -37,10 +37,6 @@ class UiH4P2 : Ui {
         
         setM(input[0].toInt())
     }
-    
-    private fun setM(m: Int) {
-        this.m = m
-    }
 
     private fun setSeq(left: Double, right: Double) {
         if (left >= right) {
@@ -51,6 +47,17 @@ class UiH4P2 : Ui {
         }
 
         this.seq = Seq(left, right)
+    }
+
+    private fun setM(m: Int) {
+        if (m < 1) {
+            println("[ERROR]: Failed to set up m")
+            println("[ERROR]: M must be more then 0")
+            println()
+            return
+        }
+
+        this.m = m
     }
 
     private fun printTaskInfo() {
@@ -71,6 +78,7 @@ class UiH4P2 : Ui {
                 
                 """.trimIndent()
         )
+        printParameters()
         println()
     }
 
@@ -81,6 +89,7 @@ class UiH4P2 : Ui {
         println("evalAll                         -evaluate by all formulas")
         println("setParams                       -set all the parameters")
         println("printParams                     -print all the parameters")
+        println("setM                            -set M value")
         println("tests                           -start tests")
         println()
     }
@@ -89,6 +98,7 @@ class UiH4P2 : Ui {
         println("Function: 3 * x^2 + cos(x)")
         println("Sequence: $seq")
         println("M: $m")
+        println("H: ${seq.size / m}")
     }
 
     private fun printErr() {
@@ -205,6 +215,16 @@ class UiH4P2 : Ui {
                     val left: Double = input[1].toDouble()
                     val right: Double = input[2].toDouble()
                     setSeq(left, right)
+                }
+                "setM" -> {
+                    if (input.size != 2) {
+                        printErr()
+                        continue
+                    }
+
+                    val m = input[1].toInt()
+
+                    setM(m)
                 }
                 "printParams" -> {
                     if (input.size > 1) {
