@@ -22,8 +22,8 @@ class UiH4P1 : Ui {
             return
         }
 
-        val left: Double = input[1].toDouble()
-        val right: Double = input[2].toDouble()
+        val left: Double = input[0].toDouble()
+        val right: Double = input[1].toDouble()
         setSeq(left, right)
     }
 
