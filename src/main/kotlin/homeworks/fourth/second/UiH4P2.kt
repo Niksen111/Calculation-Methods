@@ -103,6 +103,7 @@ class UiH4P2 : Ui {
 
     private fun printErr() {
         println("[ERROR]: Wrong command")
+        println("Print 'help' to see command list")
         println()
     }
 
