@@ -9,4 +9,8 @@ class RightRectangleQF : QuadratureFormula {
     }
 
     override fun getName() = "RightRectangle"
+
+    override val constCoef = 1.0 / 2.0
+
+    override val rungePown = 1
 }

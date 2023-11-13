@@ -9,4 +9,8 @@ class SimpsonQF : QuadratureFormula {
     }
 
     override fun getName() = "Simpson"
+
+    override val constCoef = 1.0 / 2880.0
+
+    override val rungePown = 4
 }

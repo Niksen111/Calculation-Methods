@@ -9,4 +9,8 @@ class MiddleRectangleQF : QuadratureFormula {
     }
 
     override fun getName() = "MiddleRectangle"
+
+    override val constCoef = 1.0 / 24.0
+
+    override val rungePown = 2
 }

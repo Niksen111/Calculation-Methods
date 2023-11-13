@@ -11,4 +11,8 @@ class ThreeEightsQF : QuadratureFormula {
     }
 
     override fun getName() = "ThreeEights"
+
+    override val constCoef = 0.0
+
+    override val rungePown = 0
 }

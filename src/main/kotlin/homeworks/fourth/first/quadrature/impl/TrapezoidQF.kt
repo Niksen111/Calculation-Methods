@@ -9,4 +9,8 @@ class TrapezoidQF : QuadratureFormula {
     }
 
     override fun getName() = "Trapezoid"
+
+    override val constCoef = 1.0 / 12.0
+
+    override val rungePown = 2
 }
