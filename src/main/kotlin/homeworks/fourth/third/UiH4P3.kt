@@ -5,7 +5,7 @@ import homeworks.utils.ui.Ui
 import homeworks.utils.vo.Seq
 import kotlin.math.pow
 
-class UiH4P3: Ui {
+class UiH4P3 : Ui {
     private var homework = Homework4P3()
     private var function = Homework4P1.function
     private var integral = Homework4P1.integral
@@ -82,8 +82,10 @@ class UiH4P3: Ui {
     }
 
     private fun printTaskInfo() {
-        println("Task №4.3 Approximate calculation of the integral using compound quadrature formulas" +
-                " (Depending on multiplier of number of segments and error elimination with Runge method)")
+        println(
+            "Task №4.3 Approximate calculation of the integral using compound quadrature formulas" +
+                    " (Depending on multiplier of number of segments and error elimination with Runge method)"
+        )
         println(
             """
                 Problem parameters: integration limits a, b, weight function ρ(x) and
@@ -97,6 +99,7 @@ class UiH4P3: Ui {
                 • trapezoid;
                 • Simpson
                 with parameters m, l. Let us denote these values respectively by J(h) and J(h/l), here h = (b‒a)/m).
+                Finally, we reduce error with Runge method.
                 
                 """.trimIndent()
         )
@@ -144,7 +147,9 @@ class UiH4P3: Ui {
 
             println("Quadrature Formula: $formula")
             println("Value J(h): ${mValue}")
-            println("Absolute error: ${homework.getAbsError(mValue, seq)}")
+            println("Absolute error J(h): ${homework.getAbsError(mValue, seq)}")
+            println("Value J(h/l): ${mlValue}")
+            println("Absolute error J(h/l): ${homework.getAbsError(mlValue, seq)}")
             println("Runge method value for J(h): ${rungeValue}")
             println("Runge method error for J(h): ${homework.getAbsError(rungeValue, seq)}")
             println()
@@ -216,6 +221,7 @@ class UiH4P3: Ui {
 
                     printCommandList()
                 }
+
                 "back" -> {
                     if (input.size > 1) {
                         printErr()
@@ -224,6 +230,7 @@ class UiH4P3: Ui {
 
                     break
                 }
+
                 "evalAll" -> {
                     if (input.size > 1) {
                         printErr()
@@ -232,6 +239,7 @@ class UiH4P3: Ui {
 
                     evaluateByAllFormulas()
                 }
+
                 "tests" -> {
                     if (input.size > 1) {
                         printErr()
@@ -240,6 +248,7 @@ class UiH4P3: Ui {
 
                     tests()
                 }
+
                 "setParams" -> {
                     if (input.size > 1) {
                         printErr()
@@ -248,6 +257,7 @@ class UiH4P3: Ui {
 
                     setParams()
                 }
+
                 "setSeq" -> {
                     if (input.size != 3) {
                         printErr()
@@ -258,6 +268,7 @@ class UiH4P3: Ui {
                     val right: Double = input[2].toDouble()
                     setSeq(left, right)
                 }
+
                 "setM" -> {
                     if (input.size != 2) {
                         printErr()
@@ -268,6 +279,7 @@ class UiH4P3: Ui {
 
                     setM(m)
                 }
+
                 "setL" -> {
                     if (input.size != 2) {
                         printErr()
@@ -278,6 +290,7 @@ class UiH4P3: Ui {
 
                     setL(l)
                 }
+
                 "printParams" -> {
                     if (input.size > 1) {
                         printErr()
@@ -286,6 +299,7 @@ class UiH4P3: Ui {
 
                     printParameters()
                 }
+
                 else -> {
                     printErr()
                 }

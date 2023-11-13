@@ -8,5 +8,6 @@ interface QuadratureFormula {
     fun getName(): String
 
     val constCoef: Double
+
     val rungePown: Int
 }
