@@ -20,7 +20,7 @@ class UiH4P3: Ui {
     private fun setParams() {
         println("Enter left and right boundaries of the seq:")
         var input = readln().split(" ")
-        if (input.size != 3) {
+        if (input.size != 2) {
             printErr()
             return
         }
