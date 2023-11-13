@@ -3,6 +3,7 @@ package homeworks.fourth.third
 import homeworks.fourth.first.Homework4P1
 import homeworks.utils.ui.Ui
 import homeworks.utils.vo.Seq
+import kotlin.math.pow
 
 class UiH4P3: Ui {
     private var homework = Homework4P3()
@@ -112,6 +113,7 @@ class UiH4P3: Ui {
         println("printParams                     -print all the parameters")
         println("setM                            -set M value")
         println("setL                            -set L value")
+        println("tests                           -start tests")
         println()
     }
 
@@ -151,6 +153,48 @@ class UiH4P3: Ui {
         println()
     }
 
+    private fun tests() {
+        println("Tests: ")
+        println()
+        m = 10
+        seq = Seq(0.0, 10.0)
+
+        println("Seq [0; 10], f(x) = 1, I = x, m = 10, l = $l")
+        function = { 1.0 }
+        integral = { x -> x }
+        setHomework()
+        evaluateByAllFormulas()
+        println()
+
+        println("Seq [0; 10], f(x) = 2x, I = x^2, m = 10, l = $l")
+        function = { x -> 2 * x }
+        integral = { x -> x.pow(2) }
+        setHomework()
+        evaluateByAllFormulas()
+        println()
+
+        println("Seq [0; 10], f(x) = 3x^2, I = x^3, m = 10, l = $l")
+        function = { x -> 3 * x.pow(2) }
+        integral = { x -> x.pow(3) }
+        setHomework()
+        evaluateByAllFormulas()
+        println()
+
+        println("Seq [0; 10], f(x) = 4x^3, I = x^4, m = 10, l = $l")
+        function = { x -> 4 * x.pow(3) }
+        integral = { x -> x.pow(4) }
+        setHomework()
+        evaluateByAllFormulas()
+        println()
+
+        println("Seq [0; 10], f(x) = 5x^4, I = x^5, m = 10, l = $l")
+        function = { x -> 5 * x.pow(4) }
+        integral = { x -> x.pow(5) }
+        setHomework()
+        evaluateByAllFormulas()
+        println()
+    }
+
     override fun start() {
         printTaskInfo()
         printCommandList()
@@ -187,6 +231,14 @@ class UiH4P3: Ui {
                     }
 
                     evaluateByAllFormulas()
+                }
+                "tests" -> {
+                    if (input.size > 1) {
+                        printErr()
+                        continue
+                    }
+
+                    tests()
                 }
                 "setParams" -> {
                     if (input.size > 1) {
