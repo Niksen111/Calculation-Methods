@@ -1,5 +1,6 @@
 package homeworks.utils.ui
 
+import homeworks.fifth.first.UiH5P1
 import homeworks.first.UiH1
 import homeworks.fourth.first.UiH4P1
 import homeworks.fourth.second.UiH4P2
@@ -16,7 +17,8 @@ class UiManager {
         UiH3P2(),
         UiH4P1(),
         UiH4P2(),
-        UiH4P3()
+        UiH4P3(),
+        UiH5P1()
     )
 
     private val uiByUiCode = uiList.associateBy { it.getCode() }

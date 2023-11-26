@@ -1,4 +1,4 @@
-package homeworks.fifth
+package homeworks.fifth.first
 
 import dnl.utils.text.table.TextTable
 import homeworks.first.Homework1
@@ -17,7 +17,7 @@ class QFHADA(
     private val pString: String,
     private val f: (Double) -> Double,
     private val fString: String,
-    private val pseudoIntegral: (Seq) -> Double
+    private val integral: (Seq) -> Double
 ) {
     private var sm = 0.0
     private var absErr = 0.0
@@ -58,7 +58,7 @@ class QFHADA(
             resutl
         }
         val homework1 = Homework1(func, seq, 1e-10)
-        val nodes: List<Double> = homework1.separateSolutions(100000000)
+        val nodes: List<Double> = homework1.separateSolutions(1000000)
             .map { homework1.findSolutionByMethod("Bisection", it).result }
         nodes.sorted()
         this.nodes = Array2DRowRealMatrix(nodes.size, 1)
@@ -89,7 +89,7 @@ class QFHADA(
             sm += realMatrix.getEntry(i, 0) * this.f(nodes[i])
         }
         this.sm = sm
-        absErr = abs(this.pseudoIntegral(seq) - sm)
+        absErr = abs(this.integral(seq) - sm)
     }
 
     private fun doSimpleQFha(): List<DoubleArray> {
@@ -131,7 +131,7 @@ class QFHADA(
             simpleSm += simpleA.getEntry(i, 0) * f(simpleNodes[i])
         }
         this.simpleSm = simpleSm
-        simpleErr = abs(pseudoIntegral(seq) - simpleSm)
+        simpleErr = abs(integral(seq) - simpleSm)
         return listOf(simpleMoments, simpleNodes, simpleAData)
     }
 
@@ -144,7 +144,7 @@ class QFHADA(
             f(x) = $fString
             """.trimIndent()
         )
-        println("Точное значение интеграла: ${pseudoIntegral(seq)}")
+        println("Точное значение интеграла: ${integral(seq)}")
         val simpleTableColumns = arrayOf("i", "Моменты", "Узлы", "Коэффициенты")
         val simpleQFha = doSimpleQFha()
         val simpleMoments = simpleQFha[0]
