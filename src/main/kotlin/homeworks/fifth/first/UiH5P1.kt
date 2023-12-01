@@ -2,10 +2,7 @@ package homeworks.fifth.first
 
 import homeworks.utils.ui.Ui
 import homeworks.utils.vo.Seq
-import kotlin.math.cos
-import kotlin.math.exp
-import kotlin.math.pow
-import kotlin.math.sin
+import kotlin.math.*
 
 class UiH5P1 : Ui {
     private var homework = Homework5P1()
@@ -23,7 +20,8 @@ class UiH5P1 : Ui {
                 """.trimIndent()
         )
         println("Вариант 10")
-        println("p(x) = exp(x), sin(x)")
+        println("f(x) = sin(x)")
+        println("p(x) = sqrt(1 - x)")
         println(
             """
             Теоретический блок:
@@ -38,8 +36,11 @@ class UiH5P1 : Ui {
                  для которой квадратурная формула точна для всех многочленов степени не выше этой. 
                 2. d = 2N-1
                 3. Теорема 1
-                   https://studentspburu.sharepoint.com/sites/21.04--21.06/DocLib/ВычПрактикум/Задание_5_Теория_Часть1_.pdf?CT=1684357355543&OR=ItemsView
-                4. 
+                   Для того, чтобы АСТ КФ (1) = 2𝑁 − 1, необходимо и достаточно:
+                    1. 𝜔𝑁 (𝑥) = ∏︀[k=1->N](𝑥 − 𝑥𝑘), ∫︁[𝑎,𝑏] 𝜌(𝑥)𝜔𝑁(𝑥)𝑄𝑁−1(𝑥)d𝑥 = 0 ∀𝑄𝑁−1 (2)
+                    (𝜔𝑁 ⊥[𝜌, (𝑎,𝑏)] 𝑄𝑁−1 ⇐⇒ 𝜔𝑁 ⊥[𝜌,(𝑎,𝑏)] 1, 𝑥, . . . , 𝑥𝑁−1)
+                    2. КФ (1) — интерполяционная
+                4. ...
                 
             Практический блок:
             Параметры задачи: пределы интегрирования – 𝑎, 𝑏 (запрашивать у пользователя; вводятся с клавиатуры), функции 𝜌(𝑥) и 𝑓(𝑥) (описать в коде программы).
@@ -76,8 +77,20 @@ class UiH5P1 : Ui {
 
     private fun tests() {
         val seq1 = Seq(0, 1)
+        var qfhada = QFHADA(seq1, 2, Homework5P1.p, "sqrt(1 - x)", Homework5P1.f, "sin(x)",
+            Homework5P1.pseudoIntegral)
+        qfhada.printInfo()
+        println()
+        qfhada = QFHADA(seq1, 3, Homework5P1.p, "sqrt(1 - x)", Homework5P1.f, "sin(x)",
+            Homework5P1.pseudoIntegral)
+        qfhada.printInfo()
+        println()
+        qfhada = QFHADA(seq1, 5, Homework5P1.p, "sqrt(1 - x)", Homework5P1.f, "sin(x)",
+            Homework5P1.pseudoIntegral)
+        qfhada.printInfo()
+        println()
         val exponent = { x: Double -> exp(x) }
-        var qfhada = QFHADA(seq1, 2, exponent, "exp(x)", { x -> sin(x) }, "sin(x)",
+        qfhada = QFHADA(seq1, 2, exponent, "exp(x)", { x -> sin(x) }, "sin(x)",
             { seq : Seq -> 0.5 * exp(seq.right) * (sin(seq.right) - cos(seq.right)) - 0.5 * exp(seq.left) * (sin(seq.left) - cos(seq.left)) })
         qfhada.printInfo()
         println()

@@ -6,9 +6,10 @@ import homeworks.fourth.second.CompoundQuadratureFormula
 import homeworks.utils.vo.Seq
 import org.apache.commons.math3.linear.Array2DRowRealMatrix
 import org.apache.commons.math3.linear.MatrixUtils.inverse
-import kotlin.math.pow
 import org.apache.commons.math3.linear.RealMatrix
+import java.lang.String.format
 import kotlin.math.abs
+import kotlin.math.pow
 
 class QFHADA(
     private val seq: Seq,
@@ -21,9 +22,9 @@ class QFHADA(
 ) {
     private var sm = 0.0
     private var absErr = 0.0
-    private var A: RealMatrix? = null
-    private var nodes: RealMatrix? = null
-    private var moments: RealMatrix? = null
+    private var A: RealMatrix
+    private var nodes: RealMatrix
+    private var moments: RealMatrix
     private var simpleErr = 0.0
     private var simpleSm = 0.0
     private val m = 10000
@@ -41,6 +42,7 @@ class QFHADA(
                 momentsData[i][j] = momentsArr[i + j]
             }
         }
+
         val momentsMinusVec = Array(n) { DoubleArray(1) }
         for (i in n until 2 * n) {
             momentsMinusVec[i - n][0] = -momentsArr[i]
@@ -50,45 +52,38 @@ class QFHADA(
         val momentsMinus: RealMatrix = Array2DRowRealMatrix(momentsMinusVec)
         val aVec: RealMatrix = momentsInverse.multiply(momentsMinus)
         val func = { x: Double ->
-            var resutl = 0.0
+            var result = 0.0
             for (i in 0 until n) {
-                resutl += aVec.getEntry(i, 0) * x.pow(i)
+                result += aVec.getEntry(i, 0) * x.pow(i)
             }
-            resutl += x.pow(n)
-            resutl
+            result += x.pow(n)
+            result
         }
+
         val homework1 = Homework1(func, seq, 1e-10)
         val nodes: List<Double> = homework1.separateSolutions(1000000)
-            .map { homework1.findSolutionByMethod("Bisection", it).result }
+            .map { homework1.findSolutionByMethod("Secant", it).result }
         nodes.sorted()
-        this.nodes = Array2DRowRealMatrix(nodes.size, 1)
-        for (i in nodes.indices) {
-            (this.nodes as Array2DRowRealMatrix).setEntry(i, 0, nodes[i])
-        }
+        this.nodes = Array2DRowRealMatrix(nodes.toDoubleArray())
         val nodesData = Array(n) { DoubleArray(n) }
         for (i in 0 until n) {
             for (j in 0 until n) {
                 nodesData[i][j] = nodes[j].pow(i.toDouble())
             }
         }
+
         val nodesInverse: RealMatrix = inverse(Array2DRowRealMatrix(nodesData))
-        val moments0ToNMinus1 = Array(n) {
-            DoubleArray(
-                1
-            )
-        }
+        val moments0ToNMinus1 = Array(n) { DoubleArray(1) }
         for (i in 0 until n) {
             moments0ToNMinus1[i][0] = momentsArr[i]
         }
-        val moments0ToNMinus1Vec: RealMatrix = Array2DRowRealMatrix(moments0ToNMinus1)
-        moments = moments0ToNMinus1Vec
-        val realMatrix: RealMatrix = nodesInverse.multiply(moments0ToNMinus1Vec)
-        this.A = realMatrix
-        var sm = 0.0
+
+        moments = Array2DRowRealMatrix(moments0ToNMinus1)
+        this.A = nodesInverse.multiply(moments)
         for (i in 0 until n) {
-            sm += realMatrix.getEntry(i, 0) * this.f(nodes[i])
+            this.sm += A.getEntry(i, 0) * this.f(nodes[i])
         }
-        this.sm = sm
+
         absErr = abs(this.integral(seq) - sm)
     }
 
@@ -100,43 +95,45 @@ class QFHADA(
             simpleNodes[i] = xI
             xI += h
         }
+
         val simpleMoments = DoubleArray(n)
         for (i in 0 until n) {
             val func = { x: Double -> p(x) * x.pow(i) }
             simpleMoments[i] = CompoundQuadratureFormula.calculate(func, seq, m)
         }
+
         val simpleNodesData = Array(n) { DoubleArray(n) }
         for (i in 0 until n) {
             for (j in 0 until n) {
                 simpleNodesData[i][j] = simpleNodes[j].pow(i.toDouble())
             }
         }
+
         val simpleNodesMatrix: RealMatrix = Array2DRowRealMatrix(simpleNodesData)
-        val simpleMomentsData = Array(n) {
-            DoubleArray(
-                1
-            )
-        }
+        val simpleMomentsData = Array(n) { DoubleArray(1) }
         for (i in 0 until n) {
             simpleMomentsData[i][0] = simpleMoments[i]
         }
+
         val simpleMomentsMatrix: RealMatrix = Array2DRowRealMatrix(simpleMomentsData)
         val simpleA: RealMatrix = inverse(simpleNodesMatrix).multiply(simpleMomentsMatrix)
         val simpleAData = DoubleArray(n)
         for (i in 0 until n) {
             simpleAData[i] = simpleA.getEntry(i, 0)
         }
+
         var simpleSm = 0.0
         for (i in 0 until n) {
             simpleSm += simpleA.getEntry(i, 0) * f(simpleNodes[i])
         }
+
         this.simpleSm = simpleSm
         simpleErr = abs(integral(seq) - simpleSm)
         return listOf(simpleMoments, simpleNodes, simpleAData)
     }
 
     fun printInfo() {
-        println("Отрезок интегрирования: ${seq.size}")
+        println("Отрезок интегрирования: $seq")
         println("Количство узлов: $n")
         println(
             """
@@ -145,7 +142,7 @@ class QFHADA(
             """.trimIndent()
         )
         println("Точное значение интеграла: ${integral(seq)}")
-        val simpleTableColumns = arrayOf("i", "Моменты", "Узлы", "Коэффициенты")
+        val simpleTableColumns = arrayOf("i", "Моменты", "Узлы x_i", "Коэффициенты A_i")
         val simpleQFha = doSimpleQFha()
         val simpleMoments = simpleQFha[0]
         val simpleNodes = simpleQFha[1]
@@ -168,7 +165,7 @@ class QFHADA(
         //format with exponential notation
         println("Абсолютная погрешность для простой КФ: " + String.format("%.12e", simpleErr))
         println("Значение интеграла для простой КФ: " + String.format("%.12f", simpleSm))
-        val tableColumns = arrayOf("i", "Моменты", "Узлы", "Коэффициенты")
+        val tableColumns = arrayOf("i", "Моменты", "Узлы x_i", "Коэффициенты A_i")
         val tableData = Array(n) {
             arrayOfNulls<String>(
                 4
@@ -177,9 +174,9 @@ class QFHADA(
         for (i in 0 until n) {
             tableData[i][0] = i.toString()
             // format double to 12 symbols after dot
-            tableData[i][1] = java.lang.String.format("%.12f", moments!!.getEntry(i, 0))
-            tableData[i][2] = java.lang.String.format("%.12f", nodes!!.getEntry(i, 0))
-            tableData[i][3] = java.lang.String.format("%.12f", A!!.getEntry(i, 0))
+            tableData[i][1] = format("%.12f", moments.getEntry(i, 0))
+            tableData[i][2] = format("%.12f", nodes.getEntry(i, 0))
+            tableData[i][3] = format("%.12f", A.getEntry(i, 0))
         }
         val table = TextTable(tableColumns, tableData)
         println("Моменты, узлы и коэффициенты для НАСТ КФ: ")
