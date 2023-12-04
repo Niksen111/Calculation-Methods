@@ -11,7 +11,8 @@ private val taskMap = mapOf(
    "3.2" to "UiH3P2",
    "4.1" to "UiH4P1",
    "4.2" to "UiH4P2",
-   "4.3" to "UiH4P3"
+   "4.3" to "UiH4P3",
+   "5.2" to "UiH5P2"
 )
 
 private fun printInfo() {
