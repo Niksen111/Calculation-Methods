@@ -27,7 +27,7 @@ class QFHADA(
     private var moments: RealMatrix
     private var simpleErr = 0.0
     private var simpleSm = 0.0
-    private val m = 10000
+    private val m = 100000
 
     init {
         val momentsArr = DoubleArray(2 * n)
@@ -51,7 +51,7 @@ class QFHADA(
         val momentsInverse: RealMatrix = inverse(Array2DRowRealMatrix(momentsData))
         val momentsMinus: RealMatrix = Array2DRowRealMatrix(momentsMinusVec)
         val aVec: RealMatrix = momentsInverse.multiply(momentsMinus)
-        val func = { x: Double ->
+        val poly = { x: Double ->
             var result = 0.0
             for (i in 0 until n) {
                 result += aVec.getEntry(i, 0) * x.pow(i)
@@ -60,7 +60,7 @@ class QFHADA(
             result
         }
 
-        val homework1 = Homework1(func, seq, 1e-10)
+        val homework1 = Homework1(poly, seq, 1e-10)
         val nodes: List<Double> = homework1.separateSolutions(1000000)
             .map { homework1.findSolutionByMethod("Secant", it).result }
         nodes.sorted()

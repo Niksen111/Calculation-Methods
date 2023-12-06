@@ -6,10 +6,41 @@ import kotlin.math.*
 
 class UiH5P1 : Ui {
     private var homework = Homework5P1()
+    private var seq = Seq(0, 1)
+    private var n = 6
 
     private fun setHomework() {
         this.homework = Homework5P1(
         )
+    }
+
+    private fun setSeq(left: Double, right: Double) {
+        if (left >= right) {
+            println("[ERROR]: Failed to set up sequence")
+            println("[ERROR]: Left bound must be less then right")
+            println()
+            return
+        }
+
+        if (right > 1) {
+            println("[ERROR]: Failed to set up sequence")
+            println("[ERROR]: Right bound must be not more then 1")
+            println()
+            return
+        }
+
+        this.seq = Seq(left, right)
+    }
+
+    private fun setN(n: Int) {
+        if (n < 1) {
+            println("[ERROR]: Failed to set up m")
+            println("[ERROR]: M must be more then 0")
+            println()
+            return
+        }
+
+        this.n = n
     }
 
     private fun printTaskInfo() {
@@ -66,6 +97,8 @@ class UiH5P1 : Ui {
         println("Commands list:")
         println("help                                  -print command list")
         println("back                                  -quit the current task")
+        println("setSeq <left bound> <right bound>     -set up the sequence")
+        println("setN <N>                              -set N value")
         println("tests                                 -run tests")
         println()
     }
@@ -76,7 +109,8 @@ class UiH5P1 : Ui {
     }
 
     private fun tests() {
-        val seq1 = Seq(0, 1)
+        val seq1 = this.seq
+
         var qfhada = QFHADA(seq1, 2, Homework5P1.p, "sqrt(1 - x)", Homework5P1.f, "sin(x)",
             Homework5P1.pseudoIntegral)
         qfhada.printInfo()
@@ -86,6 +120,10 @@ class UiH5P1 : Ui {
         qfhada.printInfo()
         println()
         qfhada = QFHADA(seq1, 5, Homework5P1.p, "sqrt(1 - x)", Homework5P1.f, "sin(x)",
+            Homework5P1.pseudoIntegral)
+        qfhada.printInfo()
+        println()
+        qfhada = QFHADA(seq1, n, Homework5P1.p, "sqrt(1 - x)", Homework5P1.f, "sin(x)",
             Homework5P1.pseudoIntegral)
         qfhada.printInfo()
         println()
@@ -153,6 +191,19 @@ class UiH5P1 : Ui {
                         }
 
                         break
+                    }
+                    "setSeq" -> {
+                        if (input.size != 3) {
+                            printErr()
+                            continue
+                        }
+
+                        val left: Double = input[1].toDouble()
+                        val right: Double = input[2].toDouble()
+                        setSeq(left, right)
+                    }
+                    "setN" -> {
+
                     }
                     "tests" -> {
                         if (input.size > 1) {
