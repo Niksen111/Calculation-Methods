@@ -12,6 +12,7 @@ private val taskMap = mapOf(
    "4.1" to "UiH4P1",
    "4.2" to "UiH4P2",
    "4.3" to "UiH4P3",
+   "5.1" to "UiH5P1",
    "5.2" to "UiH5P2"
 )
 

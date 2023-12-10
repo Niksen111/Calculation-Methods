@@ -8,6 +8,8 @@ data class Seq(
         require(right >= left)
     }
 
+    constructor(left: Number, right: Number) : this(left.toDouble(), right.toDouble())
+
     val size = right - left
     val middle = (right + left) / 2
 
