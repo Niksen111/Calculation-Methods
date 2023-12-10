@@ -18,6 +18,8 @@
 
         <junit.jupiter.version>5.10.0</junit.jupiter.version>
         <jetbrains.kotlin.version>1.9.0</jetbrains.kotlin.version>
+        <apache.commons.version>3.6.1</apache.commons.version>
+        <massisframework.vesrion>0.3.4</massisframework.vesrion>
     </properties>
 
     <repositories>
@@ -50,6 +52,16 @@
             <artifactId>junit-jupiter-api</artifactId>
             <version>${junit.jupiter.version}</version>
             <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-math3</artifactId>
+            <version>${apache.commons.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.massisframework</groupId>
+            <artifactId>j-text-utils</artifactId>
+            <version>${massisframework.vesrion}</version>
         </dependency>
     </dependencies>
 

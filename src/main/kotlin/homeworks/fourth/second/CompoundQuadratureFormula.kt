@@ -1,6 +1,7 @@
 package homeworks.fourth.second
 
 import homeworks.fourth.first.quadrature.QuadratureFormula
+import homeworks.fourth.first.quadrature.impl.SimpsonQF
 import homeworks.utils.vo.Seq
 
 class CompoundQuadratureFormula {
@@ -20,5 +21,11 @@ class CompoundQuadratureFormula {
 
             return result
         }
+
+        fun calculate(
+            func: (Double) -> Double,
+            seq: Seq,
+            m: Int
+        ): Double = calculate(SimpsonQF(), func, seq, m)
     }
 }

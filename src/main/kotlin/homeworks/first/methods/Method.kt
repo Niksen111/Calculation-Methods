@@ -8,8 +8,8 @@ interface Method {
         func: (Double) -> (Double),
         sequence: Seq,
         epsilon: Double,
-        firstDerivative: (Double) -> (Double),
-        secondDerivative: (Double) -> (Double)
+        firstDerivative: (Double) -> (Double) = { 1.0 },
+        secondDerivative: (Double) -> (Double) = { 1.0 }
     ): SolutionInfo
 
     fun getMethodName(): String
