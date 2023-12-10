@@ -41,8 +41,6 @@ class GaussQuadratureFormula(
                     }
                 }
             }
-
-            // println("$i ${polynoms[i](-1.0)} ${polynoms[i](1.0)}")
         }
 
         val rootsData = HomeworkData(
@@ -60,10 +58,7 @@ class GaussQuadratureFormula(
         for (i in 0 until N) {
             val calculatedPolynomial = polynomials[N - 1](roots[i])
             coef[i] = 2.0 * (1.0 - roots[i] * roots[i]) / (N.toDouble() * N.toDouble() * calculatedPolynomial * calculatedPolynomial)
-            // coef[N - 1 - i] = coef[i]
         }
-
-        // println("========================== INIT ENDED")
     }
 
     fun evaluateParameters() {
@@ -75,12 +70,7 @@ class GaussQuadratureFormula(
     }
 
     fun calculate(func: (Double) -> Double): Double {
-        // println("========================== ROOTS: $roots")
-        // println("========================== SUM OF COEF: ${coef.sum()}")
-        // println("========================== COEF: $coef")
         evaluateParameters()
-        // println("========================== ROOTS: $roots")
-        // println("========================== SUM OF COEF: ${coef.sum()}")
         var result = 0.0
         for (i in 0 until N) {
             result += coef[i] * func(roots[i])

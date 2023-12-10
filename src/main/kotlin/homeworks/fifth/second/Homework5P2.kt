@@ -6,18 +6,6 @@ import kotlin.math.sin
 import kotlin.math.sqrt
 
 class Homework5P2(val func: (Double) -> Double = function) {
-    /* fun getFormulaForN(seq: Seq, N: Int = 8, withInfo: Boolean = false) {
-        val formulas = List(N) { ind ->
-            GaussQuadratureFormula(seq, ind + 1)
-        }
-        formulas.forEachIndexed { ind, formula ->
-            println("N value: ${ind + 1}")
-            for (i in 0 .. ind) {
-                println("Coef: ${formula.coef[i]}\tNode: ${formula.roots[i]}")
-            }
-        }
-    } */
-
     private fun printInfo(formula: GaussQuadratureFormula, N: Int) {
         println("N = $N")
         for (i in 0 until N) {
